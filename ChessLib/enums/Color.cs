@@ -8,7 +8,7 @@ namespace ChessLib.enums
 {
     enum Color
     {
-        BLACK,
-        WHITE
+        LIGHT,
+        DARK
     }
 }

@@ -26,7 +26,7 @@ namespace ChessLib.models
         private Color color;
 
         /// <summary>
-        /// The color of the piece (white or black).
+        /// The color of the piece (light or dark).
         /// </summary>
         public Color Color
         {

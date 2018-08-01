@@ -9,13 +9,14 @@ namespace ChessConsole
 {
     class Program
     {
+        static FileReader reader;
         static void Main(string[] args)
         {
-            FileReader reader = new FileReader(args[0]);
-            testDriver();
+            reader = new FileReader(args[0]);
+            TestDriver();
         }
 
-        private static void testDriver()
+        private static void TestDriver()
         {
             
         }

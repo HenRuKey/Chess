@@ -13,30 +13,38 @@ namespace ChessLib.controllers
     /// </summary>
     public class FileReader
     {
-        List<string> commands = new List<string>();
-        Regex regex = new Regex("(^[KQBNRP][ld][a-h][1-8]$)");
+       
+        Regex regex = new Regex(@"(^[KQBNRP][ld][a-h][1-8]$)|(^[a-h][1-8]\s[a-h][1-8]$)|(^[a-h][1-8]\s[a-h][1-8]\s[a-h][1-8]\s[a-h][1-8]$)");
         private string filename;
 
+        public List<string> Commands { get;}
 
         public FileReader(string filename)
         {
             this.filename = filename;
+            Commands = new List<string>();
 
             StreamReader reader = new StreamReader(filename);
 
             do
             {
-                commands.Add(reader.ReadLine());
+                Commands.Add(reader.ReadLine());
             } while (reader.Peek() != -1);
 
-            commands.ForEach(c =>
+            Commands.ForEach(c =>
             {
                 if (regex.IsMatch(c))
                 {
-                    Console.WriteLine("Hello");
+                    Console.WriteLine("Success");
+                } else
+                {
+                    throw new FormatException();
                 }
             });
         }
+
+
+
 
     }
 }

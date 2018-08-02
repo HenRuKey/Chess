@@ -39,12 +39,8 @@ namespace ChessLib.controllers
         {
             Commands.ForEach(c =>
             {
-                if (regex.IsMatch(c))
-                {
-                    Console.WriteLine("Success");
-                }
-                else
-                {
+                if (!regex.IsMatch(c))
+                { 
                     throw new FormatException();
                 }
             });

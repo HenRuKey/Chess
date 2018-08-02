@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace ChessLib.models
 {
-    class King : Piece, IMoveable, ICastleable
+    class Queen : Piece, IMoveable
     {
-        public King(Color color) : base(color) { }
 
-        // TODO: Implement IMoveable interface in King.cs
-        // TODO: Implement ICastleable interface in King.cs
+        public Queen(Color color) : base(color)
+        {
 
+        }
 
-        public bool HasMoved => throw new NotImplementedException();
+        // Implement IMoveable interface in Queen.cs
 
         public bool IsChecking(Chessboard board)
         {

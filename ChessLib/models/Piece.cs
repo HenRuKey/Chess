@@ -10,12 +10,12 @@ namespace ChessLib.models
     class Piece
     {
         #region Position
-        private Tuple<int> position;
+        private Tuple<int, int> position;
 
         /// <summary>
         /// The coordinates of the piece on the chessboard.
         /// </summary>
-        public Tuple<int> Position
+        public Tuple<int, int> Position
         {
             get { return position; }
             internal set { position = value; }

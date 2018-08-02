@@ -12,6 +12,11 @@ namespace ChessTest
 
         }
 
+        [TestMethod]
+        public void ValidCommandInFileReturnsEnglishInstructions()
+        {
+
+        }
 
     }
 }

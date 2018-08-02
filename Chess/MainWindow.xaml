@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="750" Width="1050" Loaded="Window_Loaded">
     <Grid>
-        
+        <UniformGrid Name="gridBoard" Width="600" HorizontalAlignment="Left" Margin="70">
+
+        </UniformGrid>
     </Grid>
 </Window>

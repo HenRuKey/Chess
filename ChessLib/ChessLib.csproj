@@ -41,12 +41,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="controllers\FileReader.cs" />
+    <Compile Include="controllers\Game.cs" />
     <Compile Include="enums\Color.cs" />
     <Compile Include="interfaces\IMoveable.cs" />
     <Compile Include="models\Chessboard.cs" />
+    <Compile Include="models\Command.cs" />
     <Compile Include="models\Piece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="chess_uml.vsdx" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

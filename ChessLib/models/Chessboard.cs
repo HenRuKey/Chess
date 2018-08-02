@@ -8,28 +8,27 @@ namespace ChessLib.models
 {
     class Chessboard
     {
-        #region Squares
+        #region Board
         // TODO: Determine access modifier for chessboard two-dimensional array.
-        private Piece[][] squares = new Piece[8][];
+        private Piece[][] board = new Piece[8][];
 
-        // TODO: Document squares after deciding access modifier.
-        public Piece[][] Squares
+        // TODO: Document board after deciding access modifier.
+        public Piece[][] Board
         {
-            get { return squares; }
+            get { return board; }
         }
         #endregion
 
         #region Constructor(s) and Object Initialization
         public Chessboard()
         {
-            InitializePieces();
             // TODO: Determine if the constructor requires more functionality.
         }
 
         /// <summary>
         /// Creates chess pieces and places them at their starting positions on the board.
         /// </summary>
-        void InitializePieces()
+        public void InitializePieces()
         {
             // TODO: Generate pieces and add them to the two-dimensional array.
         }

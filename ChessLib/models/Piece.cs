@@ -23,16 +23,12 @@ namespace ChessLib.models
         #endregion
 
         #region Color
-        private Color color;
 
         /// <summary>
         /// The color of the piece (light or dark).
         /// </summary>
-        public Color Color
-        {
-            get { return color; }
-            set { color = value; }
-        }
+        public readonly Color Color;
+
         #endregion
 
         #region InPlay
@@ -49,6 +45,11 @@ namespace ChessLib.models
         }
 
         #endregion
+
+        public Piece(Color color)
+        {
+            Color = color;
+        }
 
         /// <summary>
         /// Removes piece from play, setting it inactive and removing its position.

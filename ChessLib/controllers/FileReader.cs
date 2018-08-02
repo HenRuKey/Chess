@@ -16,27 +16,34 @@ namespace ChessLib.controllers
        
         Regex regex = new Regex(@"(^[KQBNRP][ld][a-h][1-8]$)|(^[a-h][1-8]\s[a-h][1-8]$)|(^[a-h][1-8]\s[a-h][1-8]\s[a-h][1-8]\s[a-h][1-8]$)");
         private string filename;
-
-        public List<string> Commands { get;}
+        public List<string> Commands { get; }
 
         public FileReader(string filename)
         {
             this.filename = filename;
             Commands = new List<string>();
 
-            StreamReader reader = new StreamReader(filename);
+            ReadCommandsFromFile();
+            ValidateCommands();
+        }
 
-            do
+        private void ReadCommandsFromFile()
+        {
+            StreamReader reader = new StreamReader(filename);
             {
                 Commands.Add(reader.ReadLine());
-            } while (reader.Peek() != -1);
+            } while (reader.Peek() != -1) ; 
+        }
 
+        private void ValidateCommands()
+        {
             Commands.ForEach(c =>
             {
                 if (regex.IsMatch(c))
                 {
                     Console.WriteLine("Success");
-                } else
+                }
+                else
                 {
                     throw new FormatException();
                 }

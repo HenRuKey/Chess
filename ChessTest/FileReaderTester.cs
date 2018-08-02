@@ -4,11 +4,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ChessTest
 {
     [TestClass]
-    public class UnitTest1
+    public class FileReaderTester
     {
         [TestMethod]
-        public void TestMethod1()
+        public void InvalidCommandInFileThrowsExceptionTest()
         {
+
         }
+
+
     }
 }

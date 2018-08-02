@@ -31,7 +31,6 @@ namespace ChessTest
                 Trace.Write(e);
                 Assert.Fail();
             }
-            catch (Exception e) { }
         }
 
     }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ChessLib.enums;
+using ChessLib.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,8 +17,8 @@ namespace ChessLib.controllers
             switch (CommandSplit.Length)
             {
                 case 1:
-                    string piece = GetPiece(CommandSplit[0]);
-                    return $"Places a {piece} on space {command[2]}{command[3]}";
+                    Piece piece = GetPiece(CommandSplit[0]);
+                    return $"Places a {piece.GetType().Name} on space {command[2]}{command[3]}";
                 case 2:
                     return $"Moves a peice from {CommandSplit[0]} to {CommandSplit[1]}";
                 case 4:
@@ -28,37 +30,33 @@ namespace ChessLib.controllers
 
        
 
-        private static string GetPiece(string v)
+        private static Piece GetPiece(string instruction)
         {
-            string piece = "";
-            string color;
-            color = (v[1] == 'l') ? "light" : "dark";
-            switch (v[0])
+            Piece piece = null;
+            Color color;
+            color = (instruction[1] == 'l') ? Color.LIGHT : Color.DARK;
+            switch (instruction[0])
             {
                 case 'K':
-                    piece = "King";
+                    piece = new King(color);
                     break;
                 case 'Q':
-                    piece = "Queen";
+                    piece = new Queen(color);
                     break;
                 case 'B':
-                    piece = "Bishop";
+                    piece = new Bishop(color);
                     break;
                 case 'N':
-                    piece = "Knight";
+                    piece = new Knight(color);
                     break;
                 case 'R':
-                    piece = "Queen";
+                    piece = new Rook(color);
                     break;
                 case 'P':
-                    piece = "Queen";
+                    piece = new Pawn(color);
                     break;
-               
             }
-
-
-
-            return color + " " + piece;
+            return piece;
         }
     }
 }

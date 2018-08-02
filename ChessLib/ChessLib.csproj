@@ -43,10 +43,13 @@
     <Compile Include="controllers\FileReader.cs" />
     <Compile Include="controllers\Game.cs" />
     <Compile Include="enums\Color.cs" />
+    <Compile Include="interfaces\ICastleable.cs" />
     <Compile Include="interfaces\IMoveable.cs" />
     <Compile Include="models\Chessboard.cs" />
     <Compile Include="models\Command.cs" />
+    <Compile Include="models\King.cs" />
     <Compile Include="models\Piece.cs" />
+    <Compile Include="models\Rook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -46,6 +46,10 @@ namespace ChessLib.models
 
         #endregion
 
+        /// <summary>
+        /// Stores information about the piece, including its color, position, and in-play status.
+        /// </summary>
+        /// <param name="color">Color of the piece (light or dark).</param>
         public Piece(Color color)
         {
             Color = color;

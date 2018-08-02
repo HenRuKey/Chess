@@ -28,8 +28,6 @@ namespace ChessLib.controllers
             return "Fail";
         }
 
-       
-
         private static Piece GetPiece(string instruction)
         {
             Piece piece = null;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -48,7 +49,7 @@ namespace ChessLib.controllers
 
                 if (c == "")
                 {
-                    Console.WriteLine(Commands.IndexOf(c));
+                    Trace.Write(Commands.IndexOf(c));
                 }
                 if (!regex.IsMatch(c))
                 { 

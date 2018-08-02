@@ -22,17 +22,23 @@ namespace ChessLib.controllers
         {
             this.filename = filename;
             Commands = new List<string>();
-
             ReadCommandsFromFile();
             ValidateCommands();
         }
 
         private void ReadCommandsFromFile()
         {
-            StreamReader reader = new StreamReader(filename);
+            try
             {
-                Commands.Add(reader.ReadLine());
-            } while (reader.Peek() != -1) ; 
+                StreamReader reader = new StreamReader(filename);
+                {
+                    Commands.Add(reader.ReadLine());
+                } while (reader.Peek() != -1) ;
+            }
+            catch
+            {
+                throw new FileNotFoundException();
+            }
         }
 
         private void ValidateCommands()

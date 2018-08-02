@@ -9,8 +9,16 @@ namespace ChessTest
     [TestClass]
     public class FileReaderTester
     {
-        private string invalidCommandsFilePath = Path.GetFullPath("../../test_data/invalid_commands.txt");
-        private string validCommandsFilePath = Path.GetFullPath("../../test_data/valid_commands.txt");
+        /*
+         * Test-Driven Development
+         * -----------------------
+         * Arrange
+         * Act
+         * Assert
+        */
+
+        private readonly string invalidCommandsFilePath = Path.GetFullPath("../../test_data/invalid_commands.txt");
+        private readonly string validCommandsFilePath = Path.GetFullPath("../../test_data/valid_commands.txt");
 
         [TestMethod]
         [ExpectedException(typeof(FormatException))]
@@ -31,6 +39,14 @@ namespace ChessTest
                 Trace.Write(e);
                 Assert.Fail();
             }
+        }
+
+        [TestMethod]
+        public void NumberOfCommandsReadFromFileIsCorrect()
+        { 
+            FileReader fileReader = new FileReader(validCommandsFilePath);
+            int count = TestData.InvalidCommands.Split('\n').Length;
+            Assert.AreEqual(fileReader.Commands.ToArray().Length, count);
         }
 
     }

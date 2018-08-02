@@ -14,7 +14,7 @@ namespace ChessLib.controllers
     public class FileReader
     {
        
-        Regex regex = new Regex(@"(^[KQBNRP][ld][a-h][1-8]$)|(^[a-h][1-8]\s[a-h][1-8]$)|(^[a-h][1-8]\s[a-h][1-8]\s[a-h][1-8]\s[a-h][1-8]$)");
+        Regex regex = new Regex(@"(^[KQBNRP][ld][a-i][0-9]$)|(^[a-i][0-9]\s[a-i][0-9]$)|(^[a-i][0-9]\s[a-i][0-9]\s[a-i][0-9]\s[a-i][0-9]$)");
         private string filename;
         public List<string> Commands { get; }
 
@@ -31,7 +31,7 @@ namespace ChessLib.controllers
             try
             {
                 StreamReader reader = new StreamReader(filename);
-                {
+                do {
                     Commands.Add(reader.ReadLine());
                 } while (reader.Peek() != -1) ;
             }
@@ -45,6 +45,11 @@ namespace ChessLib.controllers
         {
             Commands.ForEach(c =>
             {
+
+                if (c == "")
+                {
+                    Console.WriteLine(Commands.IndexOf(c));
+                }
                 if (!regex.IsMatch(c))
                 { 
                     throw new FormatException();

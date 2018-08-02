@@ -18,7 +18,12 @@ namespace ChessConsole
 
         private static void TestDriver()
         {
-            
+            List<string> commands = reader.Commands;
+
+            foreach (string c in commands)
+            {
+                Console.WriteLine(Commander.Perform(c));
+            }
         }
     }
 }

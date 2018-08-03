@@ -23,17 +23,26 @@ namespace ChessLib.controllers
                     return $"Moves a peice from {CommandSplit[0]} to {CommandSplit[1]}";
                 case 4:
                     return $"Moves a peice from {CommandSplit[0]} to {CommandSplit[1]} and another piece from {CommandSplit[2]} to {CommandSplit[3]}";
-
             }
             return "Fail";
         }
 
+        private static char NumberToLetter(int num)
+        {
+            return (char)(65 + (num - 1));
+        }
+
+        /// <summary>
+        /// Returns a piece object based on formatted instructions to create it.
+        /// </summary>
+        /// <param name="instruction">The instructions which include the type of piece, and its color.</param>
+        /// <returns>The piece created from the supplied instructions.</returns>
         private static Piece GetPiece(string instruction)
         {
             Piece piece = null;
             Color color;
             color = (instruction[1] == 'l') ? Color.LIGHT : Color.DARK;
-            switch (instruction[0])
+            switch (instruction[0].ToString().ToUpper()[0])
             {
                 case 'K':
                     piece = new King(color);

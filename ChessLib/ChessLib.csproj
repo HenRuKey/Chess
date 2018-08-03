@@ -47,7 +47,7 @@
     <Compile Include="interfaces\IMoveable.cs" />
     <Compile Include="models\Bishop.cs" />
     <Compile Include="models\Chessboard.cs" />
-    <Compile Include="controllers\Command.cs" />
+    <Compile Include="controllers\Commander.cs" />
     <Compile Include="models\King.cs" />
     <Compile Include="models\Knight.cs" />
     <Compile Include="models\Pawn.cs" />

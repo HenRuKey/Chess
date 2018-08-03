@@ -11,7 +11,13 @@ namespace ChessLib.controllers
 
     public static class Commander
     {
-      public static string Perform(string command)
+
+        /// <summary>
+        /// Performs the instructions of a string command based on its format.
+        /// </summary>
+        /// <param name="command">The valid, formatted string command.</param>
+        /// <returns>An English translation of what the method performed.</returns>
+        public static string Perform(string command)
         {
             string[] CommandSplit = command.Split(' ');
             switch (CommandSplit.Length)
@@ -27,6 +33,11 @@ namespace ChessLib.controllers
             return "Fail";
         }
 
+        /// <summary>
+        /// Converts an integer to a cooresponding letter (A=1, B=2, etc.).
+        /// </summary>
+        /// <param name="num">An integer to convert to char.</param>
+        /// <returns>The cooresponding char letter of the passed integer.</returns>
         private static char NumberToLetter(int num)
         {
             return (char)(65 + (num - 1));

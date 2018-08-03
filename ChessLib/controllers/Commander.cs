@@ -11,26 +11,30 @@ namespace ChessLib.controllers
 
     public static class Commander
     {
-
         /// <summary>
         /// Performs the instructions of a string command based on its format.
         /// </summary>
         /// <param name="command">The valid, formatted string command.</param>
-        /// <returns>An English translation of what the method performed.</returns>
-        public static string Perform(string command)
+        /// <returns>True if command was performed.</returns>
+        public static bool Perform(string command)
         {
             string[] CommandSplit = command.Split(' ');
-            switch (CommandSplit.Length)
+            int numOfInstructions = CommandSplit.Length;
+            switch (numOfInstructions)
             {
-                case 1:
-                    Piece piece = GetPiece(CommandSplit[0]);
-                    return $"Places a {piece.GetType().Name} on space {command[2]}{command[3]}";
+                case 1: 
+                    Piece piece = CreatePiece(CommandSplit[0]);
+                    // TODO: Add created piece to the board at the specified position.
+                    break;
                 case 2:
-                    return $"Moves a peice from {CommandSplit[0]} to {CommandSplit[1]}";
+                    // TODO: Move piece at given coordinates to the new coordinates.
+                    break;
                 case 4:
-                    return $"Moves a peice from {CommandSplit[0]} to {CommandSplit[1]} and another piece from {CommandSplit[2]} to {CommandSplit[3]}";
+                    // TODO: Move multiple pieces to the specified coordinates.
+                    break;
             }
-            return "Fail";
+            // TODO: Find a better way to validate performance completion.
+            return numOfInstructions == 1 || numOfInstructions == 2 || numOfInstructions == 4;
         }
 
         /// <summary>
@@ -48,7 +52,7 @@ namespace ChessLib.controllers
         /// </summary>
         /// <param name="instruction">The instructions which include the type of piece, and its color.</param>
         /// <returns>The piece created from the supplied instructions.</returns>
-        private static Piece GetPiece(string instruction)
+        private static Piece CreatePiece(string instruction)
         {
             Piece piece = null;
             Color color;

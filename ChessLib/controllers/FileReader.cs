@@ -14,7 +14,6 @@ namespace ChessLib.controllers
     /// </summary>
     public class FileReader
     {
-       
         Regex regex = new Regex(@"(^[KQBNRP][ld][a-i][0-9]$)|(^[a-i][0-9]\s[a-i][0-9]$)|(^[a-i][0-9]\s[a-i][0-9]\s[a-i][0-9]\s[a-i][0-9]$)");
         private string filename;
         public List<string> Commands { get; }
@@ -57,9 +56,6 @@ namespace ChessLib.controllers
                 }
             });
         }
-
-
-
 
     }
 }

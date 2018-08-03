@@ -9,21 +9,9 @@ namespace ChessConsole
 {
     class Program
     {
-        static FileReader reader;
         static void Main(string[] args)
         {
-            reader = new FileReader(args[0]);
-            TestDriver();
-        }
 
-        private static void TestDriver()
-        {
-            List<string> commands = reader.Commands;
-
-            foreach (string c in commands)
-            {
-                Console.WriteLine(Commander.Perform(c));
-            }
         }
     }
 }

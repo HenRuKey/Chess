@@ -45,20 +45,8 @@ namespace ChessTest
         public void NumberOfCommandsReadFromFileIsCorrect()
         { 
             FileReader fileReader = new FileReader(validCommandsFilePath);
-            int count = TestData.InvalidCommands.Split('\n').Length;
-            Assert.AreEqual(fileReader.Commands.ToArray().Length, count);
-        }
-
-
-        [TestMethod]
-        public void WhiteQueenD5CommandTranslatesCorrectly()
-        {
-            string command = "qld5";
-
-            string translation = Commander.Perform(command);
-            string expected = "Places a Queen on space d5";
-
-            Assert.AreEqual(expected, translation);
+            int count = TestData.ValidCommands.Split('\n').Length;
+            Assert.AreEqual(count, fileReader.Commands.ToArray().Length);
         }
 
     }

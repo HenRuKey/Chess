@@ -22,6 +22,7 @@ namespace ChessLib.models
             throw new NotImplementedException();
         }
 
+
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)
         {
             throw new NotImplementedException();

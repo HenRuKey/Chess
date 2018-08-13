@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessLib.enums
+namespace ChessLib.controllers
 {
-    public enum Color
+    class ChessController
     {
-        LIGHT,
-        DARK
     }
 }

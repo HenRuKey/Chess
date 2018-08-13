@@ -25,7 +25,8 @@ namespace ChessLib.models
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Quen");
+            return true;
         }
 
         public void UpdatePosition(Tuple<int, int> position)

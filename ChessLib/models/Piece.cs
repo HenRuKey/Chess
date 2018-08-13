@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChessLib.enums;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace ChessLib.models
 {
-    class Piece
+    public abstract class Piece
     {
         #region Position
         private Tuple<int, int> position;
@@ -27,7 +29,7 @@ namespace ChessLib.models
         /// <summary>
         /// The color of the piece (light or dark).
         /// </summary>
-        public readonly Color Color;
+        private readonly enums.Color color;
 
         #endregion
 
@@ -44,15 +46,38 @@ namespace ChessLib.models
             private set { isInPlay = value; }
         }
 
+        internal enums.Color Color => color;
+
         #endregion
+
+
+        public string ImagePath { get; set; }
+
+        private Ellipse ellipse;
+        public Ellipse Ellipse
+        {
+            get { return ellipse; }
+            set { ellipse = value; }
+        }
+
+        
+
+
+
 
         /// <summary>
         /// Stores information about the piece, including its color, position, and in-play status.
         /// </summary>
-        /// <param name="color">Color of the piece (light or dark).</param>
-        public Piece(Color color)
+        /// 
+        public Piece(enums.Color color)
         {
-            Color = color;
+            this.color = color;
+            this.ellipse = new Ellipse
+            {
+                Width = 60,
+                Height = 60,
+                Fill = new SolidColorBrush(Colors.BlanchedAlmond)
+            };
         }
 
         /// <summary>

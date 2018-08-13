@@ -7,7 +7,7 @@ using ChessLib.models;
 
 namespace ChessLib.interfaces
 {
-    interface IMoveable
+    public interface IMoveable
     {
         /// <summary>
         /// Determines if the piece is currently putting the opposing king in check.

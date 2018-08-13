@@ -12,7 +12,7 @@ namespace ChessLib.models
     {
         public Pawn(Color color) : base(color)
         {
-
+            this.ImagePath = (color == Color.LIGHT) ? "C:/Users/Bryan/source/repos/Chess/ChessLib/resources/images" : "pack://application,,,/Images/darkpawn.png";
         }
 
         // Implement IMoveable interface in Pawn.cs
@@ -23,7 +23,8 @@ namespace ChessLib.models
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Pawn");
+            return true;
         }
 
         public void UpdatePosition(Tuple<int, int> position)

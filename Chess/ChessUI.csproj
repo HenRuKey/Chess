@@ -94,5 +94,24 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChessLib\ChessLib.csproj">
+      <Project>{2d29d6b5-32be-4c26-b31b-462d1332b2a1}</Project>
+      <Name>ChessLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChessTest\ChessTest.csproj">
+      <Project>{baf0d312-a1fa-489b-9bf7-f6165883cd90}</Project>
+      <Name>ChessTest</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="lightpawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="darkpawn.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

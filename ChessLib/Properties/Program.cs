@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChessLib.controllers;
 
-namespace ChessLib.enums
+namespace ChessConsole
 {
-    public enum Color
+    class Program
     {
-        LIGHT,
-        DARK
+        static void Main(string[] args)
+        {
+
+        }
     }
 }

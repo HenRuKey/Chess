@@ -30,6 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +45,7 @@
     <Compile Include="controllers\FileReader.cs" />
     <Compile Include="controllers\Game.cs" />
     <Compile Include="enums\Color.cs" />
+    <Compile Include="Exceptions\InvalidCommandException.cs" />
     <Compile Include="interfaces\ICastleable.cs" />
     <Compile Include="interfaces\IMoveable.cs" />
     <Compile Include="models\Bishop.cs" />
@@ -55,9 +58,16 @@
     <Compile Include="models\Queen.cs" />
     <Compile Include="models\Rook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="chess_uml.vsdx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\lightrook.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

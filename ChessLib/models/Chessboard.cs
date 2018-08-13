@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessLib.models
 {
-    class Chessboard
+    public class Chessboard
     {
         #region Board
         // TODO: Determine access modifier for chessboard two-dimensional array.

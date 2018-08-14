@@ -60,7 +60,7 @@ namespace ChessLib.models
         /// </summary>
         /// <param name="position">The coordinates of the piece.</param>
         /// <returns>The coordinate's chess piece, null if the square is empty.</returns>
-        Piece GetPiece(Tuple<int, int> position)
+        public Piece GetPiece(Tuple<int, int> position)
         {
             // TODO: Return the chess piece from the two-dimensional array.
             return null;

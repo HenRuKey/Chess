@@ -42,10 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controllers\ChessController.cs" />
     <Compile Include="controllers\FileReader.cs" />
     <Compile Include="controllers\Game.cs" />
     <Compile Include="enums\Color.cs" />
     <Compile Include="Exceptions\InvalidCommandException.cs" />
+    <Compile Include="Exceptions\PieceNotFoundException.cs" />
     <Compile Include="interfaces\ICastleable.cs" />
     <Compile Include="interfaces\IMoveable.cs" />
     <Compile Include="models\Bishop.cs" />

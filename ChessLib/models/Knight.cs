@@ -24,7 +24,20 @@ namespace ChessLib.models
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)
         {
-            throw new NotImplementedException();
+            int XDiff = Math.Abs(this.Position.Item1 - position.Item1);
+            int YDiff = Math.Abs(this.Position.Item2 - position.Item2);
+
+            if (board.GetPiece(position) != null && board.GetPiece(position).Color == this.Color)
+            {
+                return false;
+            }
+
+            if((XDiff == 2 && YDiff == 1) || (XDiff == 1 && YDiff == 2))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void UpdatePosition(Tuple<int, int> position)

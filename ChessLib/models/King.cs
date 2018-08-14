@@ -25,7 +25,7 @@ namespace ChessLib.models
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)
         {
-            Console.WriteLine("King");
+            
             return true;
         }
 

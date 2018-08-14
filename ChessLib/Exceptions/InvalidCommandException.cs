@@ -14,7 +14,7 @@ namespace ChessLib.Exceptions
         }
 
         public InvalidCommandException(string comm)
-            : base(String.Format("Invalid Command: {0}", comm))
+            : base(String.Format("File Contains Invalid Command: {0}", comm))
         {
     
         }

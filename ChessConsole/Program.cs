@@ -14,22 +14,8 @@ namespace ChessConsole
         [STAThread]
         static void Main(string[] args)
         {
-            FileReader reader = new FileReader(args[0]);
-
-            List<string> comms = reader.Commands;
-
-            List<Piece> pieces = new List<Piece>();
-
-            foreach (var c in comms)
-            {
-                Commander.Perform(c, ref pieces);
-            }
-
-            foreach (Piece p in pieces)
-            {
-                IMoveable i = (IMoveable)p;
-                i.IsValidMove(new Chessboard(), new Tuple<int, int>(1,9));
-            }
+            ChessController chess = new ChessController(args[0]);
+            chess.PlayFromFile();
         }
     }
 }

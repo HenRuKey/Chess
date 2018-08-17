@@ -30,8 +30,8 @@ namespace ChessLib.models
             {
                 limit = 2;
             }
-            int XDiff = position.Item1 - this.Position.Item1;
-            int YDiff = position.Item2 - this.Position.Item2;
+            int YDiff = position.Item1 - this.Position.Item1;
+            int XDiff = position.Item2 - this.Position.Item2;
 
             if(XDiff == 0 && (YDiff > 0 && YDiff <= limit) && board.GetPiece(position) == null)
             {
@@ -49,6 +49,11 @@ namespace ChessLib.models
         public void UpdatePosition(Tuple<int, int> position)
         {
             
+        }
+
+        public override string ToString()
+        {
+            return "P";
         }
     }
 }

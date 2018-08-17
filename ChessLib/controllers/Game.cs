@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ChessLib.interfaces;
 using ChessLib.Exceptions;
 
+
 namespace ChessLib.controllers
 {
     public class Game
@@ -18,22 +19,32 @@ namespace ChessLib.controllers
         public Game()
         {
             board = new Chessboard();
+            pieces = new List<Piece>();
         }
 
 
         public void PlacePiece(Piece piece)
         {
-        
+            pieces.Add(piece);
+            int x = piece.Position.Item1;
+            int y = piece.Position.Item2;
+            board.Board[x,y] = piece;
         }
 
-        internal void PerformMove(Tuple<int, int>[] tuple)
+        internal bool PerformMove(Tuple<int, int>[] tuple)
         {
             Piece piece = GetPieceAtCoord(tuple[0]);
             IMoveable moveable = (IMoveable)piece;
-            if (moveable.IsValidMove(board, tuple[1]))
+            if (moveable != null && moveable.IsValidMove(board, tuple[1]))
             {
-                piece.Position = tuple[1];
+                if (piece.GetType() == typeof(King))
+                {
+                    //Console.Beep();
+                }
+                board.UpdatePosition(piece, tuple[1]);
+                return true;
             }
+            return false;
             
         }
 
@@ -42,16 +53,16 @@ namespace ChessLib.controllers
 
         }
 
-        private Piece GetPieceAtCoord(Tuple<int, int> tuple)
+        public Piece GetPieceAtCoord(Tuple<int, int> tuple)
         {
             foreach (Piece piece in pieces)
             {
-                if(piece.Position == tuple)
+                if(piece.Position.Equals(tuple))
                 {
                     return piece;
                 }
             }
-            throw new PieceNotFoundException(tuple.ToString());
+            return null;
         }
 
 

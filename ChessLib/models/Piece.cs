@@ -11,20 +11,8 @@ using System.Runtime.CompilerServices;
 
 namespace ChessLib.models
 {
-    public class Piece : INotifyPropertyChanged
+    public class Piece 
     {
-
-        #region INotifyPropertyChanged Implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        #endregion
-
         #region Position
         private Tuple<int, int> position;
 
@@ -76,7 +64,7 @@ namespace ChessLib.models
         /// <remarks>
         /// This does not remove piece from the board object. That must be done independently.
         /// </remarks>
-        void RemoveFromPlay()
+        public void RemoveFromPlay()
         {
             IsInPlay = false;
             Position = null;

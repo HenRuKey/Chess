@@ -10,12 +10,12 @@ namespace ChessLib.models
 {
     public class Pawn : Piece, IMoveable
     {
-        public bool FirstMove { get; set; }
-
         public Pawn(Color color) : base(color)
         {
-            this.ImagePath = (color == Color.LIGHT) ? "C:/Users/Bryan/source/repos/Chess/ChessLib/resources/images" : "pack://application,,,/Images/darkpawn.png";
+
         }
+
+        public bool FirstMove { get; set; }
 
         // Implement IMoveable interface in Pawn.cs
         public bool IsChecking(Chessboard board)

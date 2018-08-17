@@ -53,6 +53,8 @@ namespace Chess
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             game = new Game();
+            gridBoard.Columns = 8;
+            gridBoard.Rows = 8;
 
             for (int i = 0; i < 8; i++)
             {

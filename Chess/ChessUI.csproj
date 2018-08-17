@@ -119,12 +119,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="lightpawn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="darkpawn.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\pieces\dark_bishop.png" />
   </ItemGroup>
   <ItemGroup>

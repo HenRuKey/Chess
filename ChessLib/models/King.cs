@@ -33,5 +33,11 @@ namespace ChessLib.models
         {
             throw new NotImplementedException();
         }
+
+        public override string ToString()
+        {
+            return "K";
+        }
+
     }
 }

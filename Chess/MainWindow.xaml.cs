@@ -28,8 +28,8 @@ namespace Chess
         List<Tile> tiles = new List<Tile>();
         List<Piece> pieces = new List<Piece>();
         //Game game = new Game();
-        int CommandItr = 0;
-        List<string> commands;
+        //int CommandItr = 0;
+        //List<string> commands;
 
 
 
@@ -42,7 +42,7 @@ namespace Chess
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             string[] args = Environment.GetCommandLineArgs();
-            Game game = new Game(args[1]);
+            Game game = new Game();
 
             Color softWhite = new Color()
             {

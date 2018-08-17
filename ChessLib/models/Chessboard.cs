@@ -10,13 +10,11 @@ namespace ChessLib.models
     {
         #region Board
         // TODO: Determine access modifier for chessboard two-dimensional array.
-        private Piece[][] board = new Piece[8][];
+        private Piece[,] board = new Piece[8,8];
 
         // TODO: Document board after deciding access modifier.
-        public Piece[][] Board
-        {
-            get { return board; }
-        }
+
+        public Piece[,] Board { get => board; set => board = value; }
         #endregion
 
         #region Constructor(s) and Object Initialization
@@ -39,8 +37,11 @@ namespace ChessLib.models
         /// </summary>
         /// <param name="piece">The piece to move.</param>
         /// <param name="position">The coordinates of the piece's new, legal position.</param>
-        void UpdatePosition(Piece piece, Tuple<int, int> position)
+        public void UpdatePosition(Piece piece, Tuple<int, int> position)
         {
+            board[piece.Position.Item1, piece.Position.Item2] = null;
+            piece.Position = position;
+            board[piece.Position.Item1, piece.Position.Item2] = piece;
             // Assume controller has found the move is legal.
 
             // Get the current position of the piece.
@@ -50,8 +51,8 @@ namespace ChessLib.models
             // Use the UpdatePosition method of the IMoveable interface to change the piece's position.
 
             // Check if the piece's claimed position is occupied.
-                // If so, set the occupying piece to inactive using the RemoveFromPlay method.
-            
+            // If so, set the occupying piece to inactive using the RemoveFromPlay method.
+
             // Use the piece's position property to add it to the square two-dimensional array. 
         }
 
@@ -62,8 +63,7 @@ namespace ChessLib.models
         /// <returns>The coordinate's chess piece, null if the square is empty.</returns>
         public Piece GetPiece(Tuple<int, int> position)
         {
-            // TODO: Return the chess piece from the two-dimensional array.
-            return null;
+            return board[position.Item1, position.Item2];
         }
 
     }

@@ -46,22 +46,22 @@ namespace ChessLib.controllers
                     piece = new Pawn(color);
                     break;
             }
-            piece.Position = new Tuple<int, int>(CharToInt(instruction[2]), instruction[3] - '0');
+            piece.Position = new Tuple<int, int>(instruction[3] - '1', CharToInt(instruction[2]));
             
             return piece;
         }
 
         public static Tuple<int, int>[] GetSpecialCoordinates(string[] CommandSplit)
         {
-            int x1 = CharToInt(CommandSplit[0][0]);
-            int y1 = CommandSplit[0][1] - '0';
-            int NewX1 = CharToInt(CommandSplit[1][0]);
-            int NewY1 = CommandSplit[1][1] - '0';
+            int y1 = CharToInt(CommandSplit[0][0]);
+            int x1 = CommandSplit[0][1] - '1';
+            int NewY1 = CharToInt(CommandSplit[1][0]);
+            int NewX1 = CommandSplit[1][1] - '1';
 
-            int x2 = CharToInt(CommandSplit[0][0]);
-            int y2 = CommandSplit[0][1] - '0';
-            int NewX2 = CharToInt(CommandSplit[1][0]);
-            int NewY2 = CommandSplit[1][1] - '0';
+            int y2 = CharToInt(CommandSplit[0][0]);
+            int x2 = CommandSplit[0][1] - '1';
+            int NewY2 = CharToInt(CommandSplit[1][0]);
+            int NewX2 = CommandSplit[1][1] - '1';
 
             Tuple<int, int> OldPos1 = new Tuple<int, int>(x1, y1);
             Tuple<int, int> OldPos2 = new Tuple<int, int>(x2, y2);
@@ -83,10 +83,10 @@ namespace ChessLib.controllers
 
         public static Tuple<int, int>[] GetCoordinates(string[] CommandSplit)
       {
-            int x = CharToInt(CommandSplit[0][0]);
-            int y = CommandSplit[0][1] - '0';
-            int NewX = CharToInt(CommandSplit[1][0]);
-            int NewY = CommandSplit[1][1] - '0';
+            int y = CharToInt(CommandSplit[0][0]);
+            int x = CommandSplit[0][1] - '1';
+            int NewY = CharToInt(CommandSplit[1][0]);
+            int NewX = CommandSplit[1][1] - '1';
 
             Tuple<int, int> OldPos = new Tuple<int, int>(x, y);
             Tuple<int, int> NewPos = new Tuple<int, int>(NewX, NewY);

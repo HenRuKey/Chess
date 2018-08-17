@@ -19,21 +19,21 @@ namespace ChessLib.models
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)
         {
-            int XDiff = this.Position.Item1 - position.Item1;
-            int YDiff = this.Position.Item2 - position.Item2;
+            int YDiff = this.Position.Item1 - position.Item1;
+            int XDiff = this.Position.Item2 - position.Item2;
 
             if (XDiff == 0 || YDiff == 0)
             {
-                for (int i = 0; i < XDiff; i++)
+                for (int i = 1; i < XDiff; i++)
                 {
-                    if(board.GetPiece(new Tuple<int, int>(this.Position.Item1 + i, this.Position.Item2)) != null)
+                    if(board.GetPiece(new Tuple<int, int>(this.Position.Item1, this.Position.Item2 + i)) != null)
                     {
                         return false;
                     }
                 }
-                for (int i = 0; i < YDiff; i++)
+                for (int i = 1; i < YDiff; i++)
                 {
-                    if (board.GetPiece(new Tuple<int, int>(this.Position.Item1, this.Position.Item2 + i)) != null)
+                    if (board.GetPiece(new Tuple<int, int>(this.Position.Item1 + i, this.Position.Item2)) != null)
                     {
                         return false;
                     }
@@ -54,6 +54,11 @@ namespace ChessLib.models
         public void UpdatePosition(Tuple<int, int> position)
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return "R";
         }
     }
 }

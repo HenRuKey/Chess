@@ -21,6 +21,33 @@ namespace ChessLib.controllers
             Commands = reader.Commands;
         }
 
+
+        /// <summary>
+        ///   Temporary Debugging Method
+        ///   ***DELETE WHEN FIXED***
+        /// </summary>
+        public void PrintBoard()
+        {
+            for (int i = 7; i >= 0; i--)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    Piece p = game.GetPieceAtCoord(new Tuple<int, int>(i, j));
+                    if (p != null)
+                    {
+                        Console.Write($"[{p.ToString()}]");
+                    } else
+                    {
+                        Console.Write("[ ]");
+                    }
+                    
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            Console.ReadKey();
+        }
+
         public void PlayFromFile()
         {
             foreach (string command in Commands)
@@ -34,18 +61,18 @@ namespace ChessLib.controllers
                         game.PlacePiece(piece);
                         break;
                     case 2:
-                        game.PerformMove(Commander.GetCoordinates(CommandSplit));
-  
+                        if (game.PerformMove(Commander.GetCoordinates(CommandSplit)))
+                        {
+                            PrintBoard();
+                        };
                         break;
                     case 4:
                         game.SpecialMove(Commander.GetSpecialCoordinates(CommandSplit));
-
                         break;
                     default: throw new InvalidCommandException(command);
                 }
             }
         }
-
 
         //TODO Add manual gameplay methods
 

@@ -6,11 +6,25 @@ using System.Threading.Tasks;
 using ChessLib.enums;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ChessLib.models
 {
-    public abstract class Piece
+    public class Piece : INotifyPropertyChanged
     {
+
+        #region INotifyPropertyChanged Implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
+
         #region Position
         private Tuple<int, int> position;
 
@@ -29,7 +43,7 @@ namespace ChessLib.models
         /// <summary>
         /// The color of the piece (light or dark).
         /// </summary>
-        private readonly enums.Color color;
+        public readonly enums.Color Color;
 
         #endregion
 
@@ -45,25 +59,7 @@ namespace ChessLib.models
             get { return isInPlay; }
             private set { isInPlay = value; }
         }
-
-        internal enums.Color Color => color;
-
         #endregion
-
-
-        public string ImagePath { get; set; }
-
-        private Ellipse ellipse;
-        public Ellipse Ellipse
-        {
-            get { return ellipse; }
-            set { ellipse = value; }
-        }
-
-        
-
-
-
 
         /// <summary>
         /// Stores information about the piece, including its color, position, and in-play status.
@@ -71,13 +67,7 @@ namespace ChessLib.models
         /// 
         public Piece(enums.Color color)
         {
-            this.color = color;
-            this.ellipse = new Ellipse
-            {
-                Width = 60,
-                Height = 60,
-                Fill = new SolidColorBrush(Colors.BlanchedAlmond)
-            };
+            this.Color = color;
         }
 
         /// <summary>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChessLib.models
 {
-    class Pawn : Piece, IMoveable
+    public class Pawn : Piece, IMoveable
     {
         public bool FirstMove { get; set; }
 

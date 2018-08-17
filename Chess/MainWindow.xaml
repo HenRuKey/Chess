@@ -7,30 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="750" Width="1050" Loaded="Window_Loaded" Background="#222">
     <Grid>
-        <UniformGrid Name="gridBoard" Width="600" HorizontalAlignment="Left" Margin="70">
-
-        </UniformGrid>
-        <Grid Name="gridPieces" Width="600" HorizontalAlignment="Left" Margin="70" Panel.ZIndex="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-        </Grid>
+        <UniformGrid Name="gridBoard" Width="600" HorizontalAlignment="Left" Margin="70"/>
     </Grid>
 </Window>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -10,12 +11,12 @@ namespace Chess
 {
     class Tile
     {
-        private Rectangle rectangle;
 
-        public Rectangle Rectangle
+        private Grid grid;
+        public Grid Grid
         {
-            get { return rectangle; }
-            private set { rectangle = value; }
+            get { return grid; }
+            private set { grid = value; }
         }
 
         private readonly Tuple<int, int> position;
@@ -24,15 +25,11 @@ namespace Chess
             get { return position; }
         }
 
-
         public Tile(Color color, Tuple<int,int> position)
         {
-            Rectangle = new Rectangle
+            this.Grid = new Grid()
             {
-                Width = 75,
-                Height = 75,
-                Stroke = new SolidColorBrush(Colors.Black),
-                Fill = new SolidColorBrush(color)
+                Background = new SolidColorBrush(color)
             };
             this.position = position;
         }

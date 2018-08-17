@@ -8,7 +8,7 @@ using ChessLib.interfaces;
 
 namespace ChessLib.models
 {
-    class Rook : Piece, IMoveable
+    public class Rook : Piece, IMoveable
     {
         public Rook(Color color) : base(color) { }
 

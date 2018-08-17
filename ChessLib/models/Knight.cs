@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChessLib.models
 {
-    class Knight : Piece, IMoveable
+    public class Knight : Piece, IMoveable
     {
         public Knight(Color color) : base(color)
         {

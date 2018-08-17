@@ -20,18 +20,29 @@ using ChessLib.models;
 
 namespace Chess
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         List<Tile> tiles = new List<Tile>();
-        List<Piece> pieces = new List<Piece>();
-        //Game game = new Game();
+        Game game;
         int CommandItr = 0;
         List<string> commands;
 
-
+        #region Color
+        Color softWhite = new Color()
+        {
+            R = 242,
+            B = 242,
+            G = 242,
+            A = 255
+        };
+        Color darkSlate = new Color()
+        {
+            R = 38,
+            B = 38,
+            G = 38,
+            A = 255
+        };
+        #endregion
 
 
         public MainWindow()
@@ -41,23 +52,8 @@ namespace Chess
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string[] args = Environment.GetCommandLineArgs();
-            Game game = new Game(args[1]);
+            game = new Game();
 
-            Color softWhite = new Color()
-            {
-                R = 242,
-                B = 242,
-                G = 242,
-                A = 255
-            };
-            Color darkSlate = new Color()
-            {
-                R = 38,
-                B = 38,
-                G = 38,
-                A = 255
-            };
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
@@ -66,7 +62,7 @@ namespace Chess
                     Tuple<int, int> position = new Tuple<int, int>(i, j);
                     Tile tile = new Tile(color, position);
                     tiles.Add(tile);
-                    gridBoard.Children.Add(tile.Rectangle);
+                    gridBoard.Children.Add(tile.Grid);
                 }
             }
 

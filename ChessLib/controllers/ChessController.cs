@@ -10,7 +10,7 @@ namespace ChessLib.controllers
 {
     public class ChessController
     {
-        Game game;
+        public Game game;
         FileReader reader;
         List<string> Commands;
         
@@ -28,6 +28,7 @@ namespace ChessLib.controllers
         /// </summary>
         public void PrintBoard()
         {
+            /*
             for (int i = 7; i >= 0; i--)
             {
                 for (int j = 0; j < 7; j++)
@@ -46,6 +47,7 @@ namespace ChessLib.controllers
             }
             Console.WriteLine();
             Console.ReadKey();
+            */
         }
 
         public void PlayFromFile()

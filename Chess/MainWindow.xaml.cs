@@ -22,11 +22,9 @@ namespace Chess
 {
     public partial class MainWindow : Window
     {
-        List<Tile> tiles = new List<Tile>();
-        Game game;
-        int CommandItr = 0;
-        List<string> commands;
 
+        Dictionary<Tuple<int, int>, Tile> tiles = new Dictionary<Tuple<int, int>, Tile>();
+        ChessController controller;
         #region Color
         Color softWhite = new Color()
         {
@@ -52,9 +50,13 @@ namespace Chess
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            game = new Game();
+            controller = new ChessController("../../../ChessTest/test_data/valid_commands.txt");
             gridBoard.Columns = 8;
             gridBoard.Rows = 8;
+            gridBoard.DataContext = controller.game.ChessBoard;
+            // Set-up event for when a piece is moved.
+            controller.game.ChessBoard.OnPieceMoved += ChessBoard_OnPieceMoved;
+            controller.game.ChessBoard.OnPiecePlaced += ChessBoard_OnPiecePlaced;
 
             for (int i = 0; i < 8; i++)
             {
@@ -62,15 +64,23 @@ namespace Chess
                 {
                     Color color = (i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1) ? darkSlate : softWhite;
                     Tuple<int, int> position = new Tuple<int, int>(i, j);
-                    Tile tile = new Tile(color, position);
-                    tiles.Add(tile);
+                    Tile tile = new Tile(color);
+                    tiles.Add(position, tile);
                     gridBoard.Children.Add(tile.Grid);
                 }
             }
+            controller.PlayFromFile();
+        }
 
+        private void ChessBoard_OnPiecePlaced(object sender, PlacementArgs e)
+        {
+            tiles[e.PiecePlaced.Position].Piece = e.PiecePlaced;
+        }
 
-            
-
+        private void ChessBoard_OnPieceMoved(object sender, MovementArgs e)
+        {
+            tiles[e.OldPosition].Piece = null;
+            tiles[e.PieceMoved.Position].Piece = e.PieceMoved;
         }
 
     }

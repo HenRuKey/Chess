@@ -9,9 +9,10 @@ namespace ChessLib.models
 {
     public class Chessboard
     {
-        #region OnPieceMoved
+        #region Events
 
         public event MovementHandler OnPieceMoved;
+        public event PlacementHandler OnPiecePlaced;
 
         #endregion
 
@@ -72,7 +73,14 @@ namespace ChessLib.models
 
             // Raise OnPieceMoved event.
             MovementArgs args = new MovementArgs(oldPosition, piece);
-            OnPieceMoved(this, args);
+            OnPieceMoved?.Invoke(this, args);
+        }
+
+        public void PlacePiece(Piece piece)
+        {
+            Board[piece.Position.Item1, piece.Position.Item2] = piece;
+            PlacementArgs args = new PlacementArgs(piece);
+            OnPiecePlaced?.Invoke(this, args);
         }
 
         /// <summary>
@@ -104,6 +112,20 @@ namespace ChessLib.models
         {
             this.oldPosition = oldPosition;
             this.pieceMoved = pieceMoved;
+        }
+    }
+
+    public class PlacementArgs : EventArgs
+    {
+        private Piece piecePlaced;
+        public Piece PiecePlaced
+        {
+            get { return piecePlaced; }
+        }
+
+        public PlacementArgs(Piece piecePlaced)
+        {
+            this.piecePlaced = piecePlaced;
         }
     }
 

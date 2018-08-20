@@ -9,6 +9,7 @@ namespace ChessLib.models
     public class Delegates
     {
         public delegate void MovementHandler(object sender, MovementArgs e);
+        public delegate void PlacementHandler(object sender, PlacementArgs e);
 
     }
 }

@@ -12,9 +12,14 @@ namespace ChessLib.controllers
 {
     public class Game
     {
+        // TODO: Find alternate ways of implementing without exposing chessboard directly.
         private Chessboard board;
-        private List<Piece> pieces;
+        public Chessboard ChessBoard
+        {
+            get { return board; }
+        }
 
+        private List<Piece> pieces;
 
         public Game()
         {
@@ -25,10 +30,9 @@ namespace ChessLib.controllers
 
         public void PlacePiece(Piece piece)
         {
+            // Do we need to track pieces on board?
             pieces.Add(piece);
-            int x = piece.Position.Item1;
-            int y = piece.Position.Item2;
-            board.Board[x,y] = piece;
+            board.PlacePiece(piece);
         }
 
         internal bool PerformMove(Tuple<int, int>[] tuple)

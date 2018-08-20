@@ -55,6 +55,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestData.resx</DependentUpon>
     </Compile>
+    <Compile Include="MovementTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -69,5 +69,6 @@ namespace ChessLib.models
             IsInPlay = false;
             Position = null;
         }
+
     }
 }

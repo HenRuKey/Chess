@@ -13,7 +13,11 @@ namespace ChessLib.controllers
         public Game game;
         FileReader reader;
         List<string> Commands;
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChessController"/> class.
+        /// </summary>
+        /// <param name="filename">The path to the file containing the chess instructions.</param>
         public ChessController(string filename)
         {
             game = new Game();
@@ -50,6 +54,10 @@ namespace ChessLib.controllers
             */
         }
 
+        /// <summary>
+        /// Performs each command from the file in order.
+        /// </summary>
+        /// <exception cref="InvalidCommandException">Thrown when an illegal move is attempted.</exception>
         public void PlayFromFile()
         {
             foreach (string command in Commands)

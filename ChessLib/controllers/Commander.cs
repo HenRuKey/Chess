@@ -76,13 +76,15 @@ namespace ChessLib.controllers
                 OldPos2,
                 NewPos2
             };
-
-
-       
         }
 
+        /// <summary>
+        /// Translates coordinates from a string to an integer tuple.
+        /// </summary>
+        /// <param name="CommandSplit">A string array containing chess coordinates.</param>
+        /// <returns>The coordinates as an integer tuple.</returns>
         public static Tuple<int, int>[] GetCoordinates(string[] CommandSplit)
-      {
+        {
             int y = CharToInt(CommandSplit[0][0]);
             int x = CommandSplit[0][1] - '1';
             int NewY = CharToInt(CommandSplit[1][0]);
@@ -96,16 +98,6 @@ namespace ChessLib.controllers
                 OldPos,
                 NewPos
             };
-        }
-
-        /// <summary>
-        /// Converts an integer to a cooresponding letter (A=1, B=2, etc.).
-        /// </summary>
-        /// <param name="num">An integer to convert to char.</param>
-        /// <returns>The cooresponding char letter of the passed integer.</returns>
-        private static char NumberToLetter(int num)
-        {
-            return (char)(65 + (num - 1));
         }
 
         private static int CharToInt(char v)

@@ -104,6 +104,7 @@ namespace ChessTest
         #endregion
 
 
+        #region Knight Movement
         [TestMethod]
         public void KnightIsPlacedAtCorrectCoordinates()
         {
@@ -134,9 +135,10 @@ namespace ChessTest
 
             game.PerformMove(coordinateArray);
             Tuple<int, int> expectedDestination = new Tuple<int, int>(2,2);
-            Trace.WriteLine(knight.Position);
             Piece pieceAtCoordinates = game.GetPieceAtCoord(expectedDestination);
             Assert.AreEqual(knight, pieceAtCoordinates);
         }
+        #endregion
+
     }
 }

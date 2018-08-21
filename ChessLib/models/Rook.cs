@@ -51,11 +51,6 @@ namespace ChessLib.models
             return false;
         }
 
-        public void UpdatePosition(Tuple<int, int> position)
-        {
-            throw new NotImplementedException();
-        }
-
         public override string ToString()
         {
             return "R";

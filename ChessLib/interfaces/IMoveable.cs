@@ -24,10 +24,5 @@ namespace ChessLib.interfaces
         /// <returns>True if the desired move is legal.</returns>
         bool IsValidMove(Chessboard board, Tuple<int, int> position);
 
-        /// <summary>
-        /// Updates the piece's current position to a specified coordinate.
-        /// </summary>
-        /// <param name="position">The piece's new, legal coordinate.</param>
-        void UpdatePosition(Tuple<int, int> position);
     }
 }

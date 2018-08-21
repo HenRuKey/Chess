@@ -31,6 +31,7 @@ namespace ChessLib.controllers
         public void PlacePiece(Piece piece)
         {
             // Do we need to track pieces on board?
+            // Do we need to check if there's a piece currently occupying that position?
             pieces.Add(piece);
             board.PlacePiece(piece);
         }
@@ -49,7 +50,6 @@ namespace ChessLib.controllers
                 return true;
             }
             return false;
-            
         }
 
         internal void SpecialMove(Tuple<int, int>[] tuple)

@@ -46,11 +46,6 @@ namespace ChessLib.models
             return false;
         }
 
-        public void UpdatePosition(Tuple<int, int> position)
-        {
-            
-        }
-
         public override string ToString()
         {
             return "P";

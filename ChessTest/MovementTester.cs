@@ -85,7 +85,6 @@ namespace ChessTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidCommandException))]
         public void QueenMovementLikeKnightFailsAndThrowsException()
         {
             Piece queen = Commander.CreatePiece("Qla4");
@@ -94,12 +93,13 @@ namespace ChessTest
             game.PlacePiece(queen);
 
             Tuple<int, int> initialPosition = queen.Position;
-            Tuple<int, int> destination = new Tuple<int, int>(initialPosition.Item1 + 2, initialPosition.Item2 + 1);
+            Tuple<int, int> destination = new Tuple<int, int>(5, 1);
             Tuple<int, int>[] coordinateArray = new Tuple<int, int>[]
             {
                 initialPosition, destination
             };
-            game.PerformMove(coordinateArray);
+            Assert.IsFalse(game.PerformMove(coordinateArray));
+
         }
         #endregion
 
@@ -127,7 +127,8 @@ namespace ChessTest
             game.PlacePiece(knight);
 
             Tuple<int, int> positionOfKnight = knight.Position;
-            Tuple<int, int> newPosition = new Tuple<int, int>(knight.Position.Item1 + 2, knight.Position.Item1 + 1);
+            Trace.WriteLine(positionOfKnight);
+            Tuple<int, int> newPosition = new Tuple<int, int>(2, 2);
             Tuple<int, int>[] coordinateArray = new Tuple<int, int>[]
             {
                 positionOfKnight, newPosition

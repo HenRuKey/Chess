@@ -12,36 +12,61 @@ namespace ChessLib.models
     {
         public Pawn(Color color) : base(color)
         {
-
+            this.FirstMove = true;
         }
 
         public bool FirstMove { get; set; }
 
         // Implement IMoveable interface in Pawn.cs
-        public bool IsChecking(Chessboard board)
+        public bool IsChecking(Chessboard board, King king)
         {
-            throw new NotImplementedException();
+            return IsValidMove(board, king.Position);
         }
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)
         {
-            int limit = 1;
-            if (this.FirstMove)
-            {
-                limit = 2;
-            }
+            int limit;
             int YDiff = position.Item1 - this.Position.Item1;
             int XDiff = position.Item2 - this.Position.Item2;
 
-            if(XDiff == 0 && (YDiff > 0 && YDiff <= limit) && board.GetPiece(position) == null)
+            switch (this.Color)
             {
-                return true;
+                case Color.LIGHT:
+                    limit = 1;
+                    if (this.FirstMove)
+                    {
+                        limit = 2;
+                        this.FirstMove = false;
+                    }
+                    if (XDiff == 0 && (YDiff > 0 && YDiff <= limit) && board.GetPiece(position) == null)
+                    {
+                        return true;
+                    }
+
+                    if (this.Position.Item1 - position.Item1 == -1 && board.GetPiece(position) != null && board.GetPiece(position).Color != this.Color)
+                    {
+                        return true;
+                    }
+                    break;
+                case Color.DARK:
+                    limit = -1;
+                    if (this.FirstMove)
+                    {
+                        limit = -2;
+                        this.FirstMove = false;
+                    }
+                    if (XDiff == 0 && (YDiff < 0 && YDiff >= limit) && board.GetPiece(position) == null)
+                    {
+                        return true;
+                    }
+
+                    if (this.Position.Item1 - position.Item1 == 1 && board.GetPiece(position) != null && board.GetPiece(position).Color != this.Color)
+                    {
+                        return true;
+                    }
+                    break;
             }
 
-            if(Math.Abs(this.Position.Item1 - position.Item1) == 1 && board.GetPiece(position) != null && board.GetPiece(position).Color != this.Color)
-            {
-                return true;
-            }
 
             return false;
         }

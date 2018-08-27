@@ -17,33 +17,76 @@ namespace ChessLib.models
 
         // Implement IMoveable interface in Bishop.cs
 
-        public bool IsChecking(Chessboard board)
+        public bool IsChecking(Chessboard board, King king)
         {
-            throw new NotImplementedException();
+            return IsValidMove(board, king.Position);
         }
 
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)
         {
-            int YDiff = position.Item1 - this.Position.Item1;
-            int XDiff = position.Item2 - this.Position.Item2;
+            int YDiff = this.Position.Item1 - position.Item1;
+            int XDiff = this.Position.Item2 - position.Item2;
 
-            if(XDiff != 0 && YDiff != 0 && Math.Abs(XDiff / YDiff) == 1)
+            if(XDiff != 0 && YDiff != 0 && Math.Abs((float)XDiff / (float)YDiff) == 1)
             {
-                for (int i = 1; i < XDiff; i++)
-                {
-
-                    if (board.GetPiece(new Tuple<int, int>(this.Position.Item1 + XDiff, this.Position.Item2 + YDiff)) != null)
-                    {
-                        return false;
-                    }
-                }
 
                 if (board.GetPiece(position) != null && board.GetPiece(position).Color == this.Color)
                 {
                     return false;
                 }
+                
+                if (XDiff > 0)
+                {
+                    if (YDiff > 0)
+                    {
+                        for (int i = 1; i < Math.Abs(XDiff); i++)
+                        {
 
+                            if (board.GetPiece(new Tuple<int, int>(this.Position.Item1 - i, this.Position.Item2 - i)) != null)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 1; i < Math.Abs(XDiff); i++)
+                        {
+
+                            if (board.GetPiece(new Tuple<int, int>(this.Position.Item1 + i, this.Position.Item2 - i)) != null)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+
+
+                } else
+                {
+                    if (YDiff > 0)
+                    {
+                        for (int i = 1; i < Math.Abs(XDiff); i++)
+                        {
+
+                            if (board.GetPiece(new Tuple<int, int>(this.Position.Item1 - i, this.Position.Item2 + i)) != null)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 1; i < Math.Abs(XDiff); i++)
+                        {
+
+                            if (board.GetPiece(new Tuple<int, int>(this.Position.Item1 + i, this.Position.Item2 + i)) != null)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
                 return true;
             }
 

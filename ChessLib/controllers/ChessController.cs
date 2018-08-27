@@ -32,10 +32,11 @@ namespace ChessLib.controllers
         /// </summary>
         public void PrintBoard()
         {
-            /*
+            
             for (int i = 7; i >= 0; i--)
             {
-                for (int j = 0; j < 7; j++)
+                Console.Write($"{1 + i}");
+                for (int j = 0; j <= 7; j++)
                 {
                     Piece p = game.GetPieceAtCoord(new Tuple<int, int>(i, j));
                     if (p != null)
@@ -49,9 +50,9 @@ namespace ChessLib.controllers
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine();
+            Console.WriteLine("  A  B  C  D  E  F  G  H  ");
             Console.ReadKey();
-            */
+            
         }
 
         /// <summary>
@@ -69,9 +70,15 @@ namespace ChessLib.controllers
                     case 1:
                         Piece piece = Commander.CreatePiece(CommandSplit[0]);
                         game.PlacePiece(piece);
+                        PrintBoard();
                         break;
                     case 2:
                         if (game.PerformMove(Commander.GetCoordinates(CommandSplit)))
+                        {
+                            game.DetectCheck();
+                            PrintBoard();
+                        }
+                        else
                         {
                             PrintBoard();
                         };

@@ -12,6 +12,7 @@ namespace ChessLib.controllers
 {
     public class Game
     {
+
         // TODO: Find alternate ways of implementing without exposing chessboard directly.
         private Chessboard board;
         public Chessboard ChessBoard
@@ -34,28 +35,57 @@ namespace ChessLib.controllers
             // Do we need to check if there's a piece currently occupying that position?
             pieces.Add(piece);
             board.PlacePiece(piece);
+            if(piece.GetType() == typeof(King))
+            {
+                if(piece.Color == enums.Color.LIGHT)
+                {
+                    board.LightKing = (King) piece;
+
+                }
+                else
+                {
+                    board.DarkKing = (King)piece;
+                }
+            };
         }
 
         internal bool PerformMove(Tuple<int, int>[] tuple)
         {
-            Piece piece = GetPieceAtCoord(tuple[0]);
-            IMoveable moveable = (IMoveable)piece;
-            if (moveable != null && moveable.IsValidMove(board, tuple[1]))
-            {
-                if (piece.GetType() == typeof(King))
-                {
-                    //Console.Beep();
-                }
-                board.UpdatePosition(piece, tuple[1]);
-                return true;
-            }
-            return false;
+            IMoveable moveable = (IMoveable)GetPieceAtCoord(tuple[0]);
+            return (moveable != null && board.TryMove(moveable, tuple));
+
+
+
+            //if (moveable != null && moveable.IsValidMove(board, tuple[1]))
+            //{
+
+            //    board.UpdatePosition(piece, tuple[1]);
+            //    return true;
+            //}
+            //return false;
+
         }
 
         internal void SpecialMove(Tuple<int, int>[] tuple)
         {
 
         }
+
+        public void DetectCheck()
+        {
+            foreach (Piece p in pieces)
+            {
+                IMoveable piece = (IMoveable)p;
+                if (piece.IsChecking(board, p.Color == enums.Color.LIGHT ? board.DarkKing : board.LightKing))
+                {
+                    Console.WriteLine("Check!");
+                };
+            }
+        }
+
+
+
+
 
         public Piece GetPieceAtCoord(Tuple<int, int> tuple)
         {

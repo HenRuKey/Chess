@@ -12,9 +12,9 @@ namespace ChessLib.models
     {
         public Rook(Color color) : base(color) { }
 
-        public bool IsChecking(Chessboard board)
+        public bool IsChecking(Chessboard board, King king)
         {
-            throw new NotImplementedException();
+            return IsValidMove(board, king.Position);
         }
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)
@@ -24,20 +24,52 @@ namespace ChessLib.models
 
             if (XDiff == 0 || YDiff == 0)
             {
-                for (int i = 1; i < XDiff; i++)
+                if (XDiff > 0)
                 {
-                    if(board.GetPiece(new Tuple<int, int>(this.Position.Item1, this.Position.Item2 + i)) != null)
+                    for (int i = 1; i < XDiff; i++)
                     {
-                        return false;
+                        if (board.GetPiece(new Tuple<int, int>(this.Position.Item1, this.Position.Item2 - XDiff + i)) != null)
+                        {
+                            return false;
+                        }
                     }
                 }
-                for (int i = 1; i < YDiff; i++)
+
+                if (XDiff < 0)
                 {
-                    if (board.GetPiece(new Tuple<int, int>(this.Position.Item1 + i, this.Position.Item2)) != null)
+                    for (int i = -1; i > XDiff; i--)
                     {
-                        return false;
+                        if (board.GetPiece(new Tuple<int, int>(this.Position.Item1, this.Position.Item2 - XDiff + i)) != null)
+                        {
+                            return false;
+                        }
                     }
                 }
+
+                if (YDiff > 0)
+                {
+                    for (int i = 1; i < YDiff; i++)
+                    {
+                        if (board.GetPiece(new Tuple<int, int>(this.Position.Item1 - YDiff + i, this.Position.Item2)) != null)
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                if (YDiff < 0)
+                {
+                    for (int i = -1; i > YDiff; i--)
+                    {
+                        if (board.GetPiece(new Tuple<int, int>(this.Position.Item1 - YDiff + i, this.Position.Item2)) != null)
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+
+
 
                 if(board.GetPiece(position) != null)
                 {

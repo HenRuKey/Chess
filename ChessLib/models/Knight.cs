@@ -17,9 +17,9 @@ namespace ChessLib.models
 
         // TODO: Implement IMoveable interface in Knight.cs
 
-        public bool IsChecking(Chessboard board)
+        public bool IsChecking(Chessboard board, King king)
         {
-            throw new NotImplementedException();
+            return IsValidMove(board, king.Position);
         }
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)

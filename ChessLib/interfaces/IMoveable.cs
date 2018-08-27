@@ -14,7 +14,7 @@ namespace ChessLib.interfaces
         /// </summary>
         /// <param name="board">The board object being played on.</param>
         /// <returns>True if the king is in check.</returns>
-        bool IsChecking(Chessboard board);
+        bool IsChecking(Chessboard board, King king);
 
         /// <summary>
         /// Determines if moving to a specified position from the piece's current position is a legal move.

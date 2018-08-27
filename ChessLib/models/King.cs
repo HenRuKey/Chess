@@ -18,14 +18,24 @@ namespace ChessLib.models
 
         public bool HasMoved => throw new NotImplementedException();
 
-        public bool IsChecking(Chessboard board)
+        public bool IsChecking(Chessboard board, King king)
         {
-            throw new NotImplementedException();
+            return IsValidMove(board, king.Position);
         }
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)
         {
-            
+            int YDIff = Math.Abs(this.Position.Item1 - position.Item1);
+            int XDiff = Math.Abs(this.Position.Item2 - position.Item2);
+
+            if (XDiff > 1 || YDIff > 1)
+            {
+                return false;
+            }
+            if (board.GetPiece(position) != null && board.GetPiece(position).Color == this.Color)
+            {
+                return false;
+            }
             return true;
         }
 

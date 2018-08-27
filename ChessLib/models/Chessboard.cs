@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChessLib.interfaces;
 using static ChessLib.models.Delegates;
 
 namespace ChessLib.models
@@ -38,7 +39,11 @@ namespace ChessLib.models
         {
             // TODO: Generate pieces and add them to the two-dimensional array.
         }
+
         #endregion
+
+        public King LightKing { get; set; }
+        public King DarkKing { get; set; }
 
         /// <summary>
         /// Sets a piece's position to a specified coordinate.
@@ -49,29 +54,11 @@ namespace ChessLib.models
         {
             // Record the piece's current position for supplying MovementHandler args.
             Tuple<int, int> oldPosition = piece.Position;
-            // Set piece to inactive.
-            // NOTE: I'm not sure whether or not setting a piece as active or inactive is necessary. Let's figure that out soon.
-            Piece occupyingPiece = board[position.Item1, position.Item2];
-            occupyingPiece?.RemoveFromPlay();
-            // NOTE: Likewise, is there a need to set the tile to null before moving the piece there?
-            board[position.Item1, position.Item2] = null;
+
+
+            board[piece.Position.Item1, piece.Position.Item2] = null;
             piece.Position = position;
             board[piece.Position.Item1, piece.Position.Item2] = piece;
-            // Assume controller has found the move is legal.
-
-            // Get the current position of the piece.
-
-            // Remove the piece from the two-dimensional array.
-
-            // Update the piece's position.
-
-            // Check if the piece's claimed position is occupied.
-            // If so, set the occupying piece to inactive using the RemoveFromPlay method.
-
-            // Use the piece's position property to add it to the square two-dimensional array. 
-
-
-            // Raise OnPieceMoved event.
             MovementArgs args = new MovementArgs(oldPosition, piece);
             OnPieceMoved?.Invoke(this, args);
         }
@@ -92,7 +79,44 @@ namespace ChessLib.models
         {
             return board[position.Item1, position.Item2];
         }
+
+        internal bool TryMove(IMoveable moveable, Tuple<int, int>[] tuple)
+        {
+            Piece movedPiece = GetPiece(tuple[0]);
+            Tuple<int, int> oldPosition = movedPiece.Position;
+            Piece OccupyingPiece = GetPiece(tuple[1]);
+            if (moveable.IsValidMove(this, tuple[1]))
+            {
+                UpdatePosition(movedPiece, tuple[1]);
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        Piece opponentPiece = GetPiece(new Tuple<int, int>(i, j));
+                        if (opponentPiece != null && opponentPiece.Color != movedPiece.Color)
+                        {
+                            IMoveable m = (IMoveable)opponentPiece;
+                            if (m.IsChecking(this, movedPiece.Color == enums.Color.LIGHT ? LightKing : DarkKing))
+                            {
+                                UpdatePosition(movedPiece, oldPosition);
+                                if (OccupyingPiece != null)
+                                {
+                                    PlacePiece(OccupyingPiece);
+                                }
+                                return false;
+                            }
+                        }
+                    }
+                }
+                
+            }
+
+            return true;
+        }
+
     }
+
+     
 
     public class MovementArgs : EventArgs
     {

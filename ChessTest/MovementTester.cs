@@ -120,7 +120,25 @@ namespace ChessTest
         }
 
         [TestMethod]
-        public void KnightMovementForwardSucceedsAndPerforms()
+        public void KnightMovementForwardSucceeds()
+        {
+            Piece knight = Commander.CreatePiece("Nlb1");
+            Game game = new Game();
+            game.PlacePiece(knight);
+
+            Tuple<int, int> positionOfKnight = knight.Position;
+            Trace.WriteLine(positionOfKnight);
+            Tuple<int, int> newPosition = new Tuple<int, int>(2, 2);
+            Tuple<int, int>[] coordinateArray = new Tuple<int, int>[]
+            {
+                positionOfKnight, newPosition
+            };
+
+            Assert.IsTrue(game.PerformMove(coordinateArray));
+        }
+
+        [TestMethod]
+        public void KnightMovementForwardPerforms()
         {
             Piece knight = Commander.CreatePiece("Nlb1");
             Game game = new Game();
@@ -135,10 +153,28 @@ namespace ChessTest
             };
 
             game.PerformMove(coordinateArray);
-            Tuple<int, int> expectedDestination = new Tuple<int, int>(2,2);
-            Piece pieceAtCoordinates = game.GetPieceAtCoord(expectedDestination);
+            Piece pieceAtCoordinates = game.GetPieceAtCoord(newPosition);
             Assert.AreEqual(knight, pieceAtCoordinates);
         }
+        
+        [TestMethod]
+        public void KnightHorizontalMovementFails()
+        {
+            Piece knight = Commander.CreatePiece("Nlb1");
+            Game game = new Game();
+            game.PlacePiece(knight);
+
+            Tuple<int, int> positionOfKnight = knight.Position;
+            Trace.WriteLine(positionOfKnight);
+            Tuple<int, int> newPosition = new Tuple<int, int>(5,0);
+            Tuple<int, int>[] coordinateArray = new Tuple<int, int>[]
+            {
+                positionOfKnight, newPosition
+            };
+
+            Assert.IsFalse(game.PerformMove(coordinateArray));
+        }
+
         #endregion
 
     }

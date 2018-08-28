@@ -12,9 +12,7 @@ namespace ChessLib.models
     {
         public King(Color color) : base(color) { }
 
-        // TODO: Implement IMoveable interface in King.cs
         // TODO: Implement ICastleable interface in King.cs
-
 
         public bool HasMoved => throw new NotImplementedException();
 

@@ -37,10 +37,15 @@ namespace Chess
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            PopulateBoard();
+        }
+
+        private void PopulateBoard()
+        {
             controller = new ChessController("../../../ChessTest/test_data/start.txt");
             gridBoard.Columns = 8;
             gridBoard.Rows = 8;
-            // Set-up event for when a piece is moved.
+            // Set-up events for when pieces are moved or placed.
             controller.game.ChessBoard.OnPieceMoved += ChessBoard_OnPieceMoved;
             controller.game.ChessBoard.OnPiecePlaced += ChessBoard_OnPiecePlaced;
 
@@ -49,7 +54,7 @@ namespace Chess
                 for (int j = 0; j < 8; j++)
                 {
                     Color color = (i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1) ? darkSlate : softWhite;
-                    Tuple<int, int> position = new Tuple<int, int>(i,j);
+                    Tuple<int, int> position = new Tuple<int, int>(i, j);
                     Tile tile = new Tile(color);
                     tiles.Add(position, tile);
                     gridBoard.Children.Add(tile.Grid);
@@ -73,13 +78,22 @@ namespace Chess
         {
             if (e.Key is System.Windows.Input.Key.Enter)
             {
+                bool isValidMove;
                 string userInput = txtBoxCommand.Text;
                 if (FileReader.CommandIsValid(userInput))
                 {
                     txtBoxCommand.Clear();
-                    controller.PerformCommand(userInput);
+                    controller.PerformCommand(userInput); // TODO find out if move succeeded.
                 }
+                else { isValidMove = false; }
             }
+        }
+
+        private void btnNewGame_Click(object sender, RoutedEventArgs e)
+        {
+            tiles = new Dictionary<Tuple<int, int>, Tile>();
+            gridBoard.Children.Clear();
+            PopulateBoard();
         }
     }
 }

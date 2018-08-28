@@ -8,7 +8,7 @@
         Title="Chess" Height="750" Width="1050" Loaded="Window_Loaded" Background="#0C0005">
     <Grid>
         <UniformGrid Name="gridBoard" Width="600" HorizontalAlignment="Left" Margin="70"/>
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Height="500" Width="300" Margin="35">
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Width="300" Margin="35">
             <Label Name="lblTurn" Height="200" Background="#730103" Foreground="#250001" 
                    Content="White's Turn" HorizontalContentAlignment="Center" 
                    VerticalContentAlignment="Center" 
@@ -16,7 +16,13 @@
             <TextBox Name="txtBoxCommand" Margin="50" FontFamily="New Century Gothic" 
                      FontWeight="Bold" FontSize="28" TextAlignment="Center"
                      Background="#730103" Foreground="#250001" KeyDown="txtBoxCommand_KeyDown"/>
-
+            <Label Name="lblMessage" Height="200" Background="#730103" Foreground="#250001" 
+                   Content="Message" HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center" 
+                   FontFamily="New Century Gothic" FontWeight="Bold" FontSize="28"/>
+            <Button Name="btnNewGame" Content="New Game" FontSize="28" 
+                    Margin="30" Background="#730103" Foreground="#250001"
+                    FontFamily="New Century Gothic" FontWeight="Bold" Click="btnNewGame_Click"/>
         </StackPanel>
     </Grid>
 </Window>

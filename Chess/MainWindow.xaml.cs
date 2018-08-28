@@ -46,7 +46,7 @@ namespace Chess
 
             for (int i = 7; i >= 0; i--)
             {
-                for (int j = 7; j >= 0; j--)
+                for (int j = 0; j < 8; j++)
                 {
                     Color color = (i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1) ? darkSlate : softWhite;
                     Tuple<int, int> position = new Tuple<int, int>(i,j);

@@ -145,8 +145,5 @@
   <ItemGroup>
     <Resource Include="resources\pieces\light_rook.png" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="resources\light_king.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

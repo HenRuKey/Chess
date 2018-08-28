@@ -1,12 +1,15 @@
-﻿using Chess.Resources;
-using ChessLib.models;
+﻿using ChessLib.models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Chess.converters
 {
@@ -14,47 +17,60 @@ namespace Chess.converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Piece pieceObject = (Piece)value ?? null;
-            // King
-            if (pieceObject?.GetType() == typeof(King))
+            if (value == null)
             {
-                return pieceObject.Color == ChessLib.enums.Color.DARK ? PieceImages.dark_king : PieceImages.light_king;
+                return value;
+            }
+
+            Piece pieceObject = (Piece)value;
+            // King
+            if (pieceObject is King)
+            {
+                return pieceObject.Color == ChessLib.enums.Color.DARK ? FindImage("dark_king") : FindImage("light_king");
             }
             // Queen
-            else if (pieceObject?.GetType() == typeof(Queen))
+            else if (pieceObject is Queen)
             {
-                return pieceObject.Color == ChessLib.enums.Color.DARK ? PieceImages.dark_queen : PieceImages.light_queen;
+                return pieceObject.Color == ChessLib.enums.Color.DARK ? FindImage("dark_queen") : FindImage("light_queen");
             }
             // Bishop
-            else if (pieceObject?.GetType() == typeof(Bishop))
+            else if (pieceObject is Bishop)
             {
-                return pieceObject.Color == ChessLib.enums.Color.DARK ? PieceImages.dark_bishop : PieceImages.light_bishop;
+                return pieceObject.Color == ChessLib.enums.Color.DARK ? FindImage("dark_bishop") : FindImage("light_bishop");
             }
             // Knight
-            else if (pieceObject?.GetType() == typeof(Knight))
+            else if (pieceObject is Knight)
             {
-                return pieceObject.Color == ChessLib.enums.Color.DARK ? PieceImages.dark_knight : PieceImages.light_knight;
+                return pieceObject.Color == ChessLib.enums.Color.DARK ? FindImage("dark_knight") : FindImage("light_knight");
             }
             //Rook
-            else if (pieceObject?.GetType() == typeof(Rook))
+            else if (pieceObject is Rook)
             {
-                return pieceObject.Color == ChessLib.enums.Color.DARK ? PieceImages.dark_rook : PieceImages.light_rook;
+                return pieceObject.Color == ChessLib.enums.Color.DARK ? FindImage("dark_rook") : FindImage("light_rook");
             }
             // Pawn
-            else if (pieceObject?.GetType() == typeof(Pawn))
+            else if (pieceObject is Pawn)
             {
-                return pieceObject.Color == ChessLib.enums.Color.DARK ? PieceImages.dark_pawn : PieceImages.light_pawn;
+                return pieceObject.Color == ChessLib.enums.Color.DARK ? FindImage("dark_pawn") : FindImage("light_pawn");
             }
             // Blank square
             else
             {
-                return PieceImages.blank;
+                return null;
             }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+
+        public static BitmapImage FindImage(string imageName)
+        {
+            string path = $"pack://application:,,,/resources/pieces/{imageName}.png";
+            BitmapImage image = new BitmapImage(new Uri(path));
+            //image.Source = (ImageSource)new ImageSourceConverter().ConvertFromString(path);
+            return image;
         }
     }
 }

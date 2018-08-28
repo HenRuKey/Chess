@@ -1,21 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using ChessLib.controllers;
 using ChessLib.models;
 
@@ -29,16 +15,16 @@ namespace Chess
         #region Color
         Color softWhite = new Color()
         {
-            R = 242,
-            B = 242,
-            G = 242,
+            R = 164,
+            B = 9,
+            G = 10,
             A = 255
         };
         Color darkSlate = new Color()
         {
-            R = 38,
-            B = 38,
-            G = 38,
+            R = 115,
+            B = 1,
+            G = 3,
             A = 255
         };
         #endregion
@@ -51,10 +37,9 @@ namespace Chess
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            controller = new ChessController("../../../ChessTest/test_data/valid_commands.txt");
+            controller = new ChessController("../../../ChessTest/test_data/start.txt");
             gridBoard.Columns = 8;
             gridBoard.Rows = 8;
-            gridBoard.DataContext = controller.game.ChessBoard;
             // Set-up event for when a piece is moved.
             controller.game.ChessBoard.OnPieceMoved += ChessBoard_OnPieceMoved;
             controller.game.ChessBoard.OnPiecePlaced += ChessBoard_OnPiecePlaced;

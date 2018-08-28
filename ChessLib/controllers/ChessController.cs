@@ -32,7 +32,7 @@ namespace ChessLib.controllers
         /// </summary>
         public void PrintBoard()
         {
-            
+            /*
             for (int i = 7; i >= 0; i--)
             {
                 Console.Write($"{1 + i}");
@@ -52,7 +52,7 @@ namespace ChessLib.controllers
             }
             Console.WriteLine("  A  B  C  D  E  F  G  H  ");
             Console.ReadKey();
-            
+            */
         }
 
         /// <summary>

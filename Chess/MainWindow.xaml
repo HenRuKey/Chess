@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1050" Loaded="Window_Loaded" Background="#222">
+        Title="Chess" Height="750" Width="1050" Loaded="Window_Loaded" Background="#222">
     <Grid>
         <UniformGrid Name="gridBoard" Width="600" HorizontalAlignment="Left" Margin="70"/>
+        <!--
+        <StackPanel HorizontalAlignment="Right" Width="300">
+            <Label Height="200" Background="White" Content="White's Turn" HorizontalContentAlignment="Center"/>
+            <TextBox Name="txtBoxCommand"/>
+            
+        </StackPanel>
+        -->
     </Grid>
 </Window>

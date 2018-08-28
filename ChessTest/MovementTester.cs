@@ -103,7 +103,6 @@ namespace ChessTest
         }
         #endregion
 
-
         #region Knight Movement
         [TestMethod]
         public void KnightIsPlacedAtCorrectCoordinates()

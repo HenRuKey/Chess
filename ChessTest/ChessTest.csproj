@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="test_data\invalid_commands.txt" />
+    <Content Include="test_data\start.txt" />
     <Content Include="test_data\valid_commands.txt" />
   </ItemGroup>
   <ItemGroup>

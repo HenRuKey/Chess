@@ -44,12 +44,12 @@ namespace Chess
             controller.game.ChessBoard.OnPieceMoved += ChessBoard_OnPieceMoved;
             controller.game.ChessBoard.OnPiecePlaced += ChessBoard_OnPiecePlaced;
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 7; i >= 0; i--)
             {
-                for (int j = 0; j < 8; j++)
+                for (int j = 7; j >= 0; j--)
                 {
                     Color color = (i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1) ? darkSlate : softWhite;
-                    Tuple<int, int> position = new Tuple<int, int>(i, j);
+                    Tuple<int, int> position = new Tuple<int, int>(i,j);
                     Tile tile = new Tile(color);
                     tiles.Add(position, tile);
                     gridBoard.Children.Add(tile.Grid);
@@ -69,5 +69,17 @@ namespace Chess
             tiles[e.PieceMoved.Position].Piece = e.PieceMoved;
         }
 
+        private void txtBoxCommand_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key is System.Windows.Input.Key.Enter)
+            {
+                string userInput = txtBoxCommand.Text;
+                if (FileReader.CommandIsValid(userInput))
+                {
+                    txtBoxCommand.Clear();
+                    controller.PerformCommand(userInput);
+                }
+            }
+        }
     }
 }

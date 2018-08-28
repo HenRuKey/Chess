@@ -63,31 +63,36 @@ namespace ChessLib.controllers
         {
             foreach (string command in Commands)
             {
-                string[] CommandSplit = command.Split(' ');
-                int numOfInstructions = CommandSplit.Length;
-                switch (numOfInstructions)
-                {
-                    case 1:
-                        Piece piece = Commander.CreatePiece(CommandSplit[0]);
-                        game.PlacePiece(piece);
+                PerformCommand(command);
+            }
+        }
+
+        public void PerformCommand(string command)
+        {
+            string[] CommandSplit = command.Split(' ');
+            int numOfInstructions = CommandSplit.Length;
+            switch (numOfInstructions)
+            {
+                case 1:
+                    Piece piece = Commander.CreatePiece(CommandSplit[0]);
+                    game.PlacePiece(piece);
+                    PrintBoard();
+                    break;
+                case 2:
+                    if (game.PerformMove(Commander.GetCoordinates(CommandSplit)))
+                    {
+                        game.DetectCheck();
                         PrintBoard();
-                        break;
-                    case 2:
-                        if (game.PerformMove(Commander.GetCoordinates(CommandSplit)))
-                        {
-                            game.DetectCheck();
-                            PrintBoard();
-                        }
-                        else
-                        {
-                            PrintBoard();
-                        };
-                        break;
-                    case 4:
-                        game.SpecialMove(Commander.GetSpecialCoordinates(CommandSplit));
-                        break;
-                    default: throw new InvalidCommandException(command);
-                }
+                    }
+                    else
+                    {
+                        PrintBoard();
+                    };
+                    break;
+                case 4:
+                    game.SpecialMove(Commander.GetSpecialCoordinates(CommandSplit));
+                    break;
+                default: throw new InvalidCommandException(command);
             }
         }
 

@@ -5,15 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="Chess" Height="750" Width="1050" Loaded="Window_Loaded" Background="#222">
+        Title="Chess" Height="750" Width="1050" Loaded="Window_Loaded" Background="#0C0005">
     <Grid>
         <UniformGrid Name="gridBoard" Width="600" HorizontalAlignment="Left" Margin="70"/>
-        <!--
-        <StackPanel HorizontalAlignment="Right" Width="300">
-            <Label Height="200" Background="White" Content="White's Turn" HorizontalContentAlignment="Center"/>
-            <TextBox Name="txtBoxCommand"/>
-            
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Height="500" Width="300" Margin="35">
+            <Label Name="lblTurn" Height="200" Background="#730103" Foreground="#250001" 
+                   Content="White's Turn" HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center" 
+                   FontFamily="New Century Gothic" FontWeight="Bold" FontSize="28"/>
+            <TextBox Name="txtBoxCommand" Margin="50" FontFamily="New Century Gothic" 
+                     FontWeight="Bold" FontSize="28" TextAlignment="Center"
+                     Background="#730103" Foreground="#250001" KeyDown="txtBoxCommand_KeyDown"/>
+
         </StackPanel>
-        -->
     </Grid>
 </Window>

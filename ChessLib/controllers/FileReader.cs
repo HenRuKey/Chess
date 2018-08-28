@@ -14,7 +14,7 @@ namespace ChessLib.controllers
     /// </summary>
     public class FileReader
     {
-        private Regex regex = new Regex(@"(^[KQBNRP][ld][a-i][0-9]$)|(^[a-i][0-9]\s[a-i][0-9]$)|(^[a-i][0-9]\s[a-i][0-9]\s[a-i][0-9]\s[a-i][0-9]$)");
+        private static Regex regex = new Regex(@"(^[KQBNRP][ld][a-i][0-9]$)|(^[a-i][0-9]\s[a-i][0-9]$)|(^[a-i][0-9]\s[a-i][0-9]\s[a-i][0-9]\s[a-i][0-9]$)");
         private string filename;
         public List<string> Commands { get; }
 
@@ -24,6 +24,11 @@ namespace ChessLib.controllers
             Commands = new List<string>();
             ReadCommandsFromFile();
             ValidateCommands();
+        }
+
+        public static bool CommandIsValid(string command)
+        {
+            return regex.IsMatch(command);
         }
 
         private void ReadCommandsFromFile()

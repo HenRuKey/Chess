@@ -10,13 +10,18 @@ namespace ChessLib.models
 {
     public class King : Piece, IMoveable, ICastleable
     {
-        public King(Color color) : base(color) { }
+        public King(Color color) : base(color) {
+            InCheck = false;
+        }
 
         // TODO: Implement IMoveable interface in King.cs
         // TODO: Implement ICastleable interface in King.cs
 
 
         public bool HasMoved => throw new NotImplementedException();
+
+        public bool InCheck { get; set; }
+
 
         public bool IsChecking(Chessboard board, King king)
         {

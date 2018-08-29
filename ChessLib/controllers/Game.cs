@@ -51,7 +51,15 @@ namespace ChessLib.controllers
 
         internal bool PerformMove(Tuple<int, int>[] tuple)
         {
-            IMoveable moveable = (IMoveable)GetPieceAtCoord(tuple[0]);
+            Piece piece = GetPieceAtCoord(tuple[0]);
+            IMoveable moveable = (IMoveable) piece;
+            if (moveable != null)
+            {
+                if(board.TryMove(moveable, tuple))
+                {
+                    board.UpdatePosition(piece, tuple[1]);
+                }
+            }
             return (moveable != null && board.TryMove(moveable, tuple));
 
 
@@ -71,20 +79,74 @@ namespace ChessLib.controllers
 
         }
 
-        public void DetectCheck()
+        public bool DetectCheck()
         {
             foreach (Piece p in pieces)
             {
                 IMoveable piece = (IMoveable)p;
-                if (piece.IsChecking(board, p.Color == enums.Color.LIGHT ? board.DarkKing : board.LightKing))
+                King king = p.Color == enums.Color.LIGHT ? board.DarkKing : board.LightKing;
+                if (piece.IsChecking(board, king))
                 {
-                    Console.WriteLine("Check!");
+                    king.InCheck = true;
+                    return true;
+                }
+                else
+                {
+                    king.InCheck = false;
                 };
             }
+
+            return false;
         }
+        internal bool IsCheckmate()
+        {
+            if (board.LightKing.InCheck)
+            {
+                foreach (Piece p in pieces)
+                {
+                    if(p.Color == enums.Color.LIGHT)
+                    {
+                        for (int i = 0; i < 8; i++)
+                        {
+                            for (int j = 0; i < 8; i++)
+                            {
+                                Tuple<int, int> position = new Tuple<int, int>(i, j);
+                                Tuple<int, int>[] coordinates = new Tuple<int, int>[] {p.Position, position };
 
+                                if(board.TryMove((IMoveable)p, coordinates))
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (board.DarkKing.InCheck)
+            {
+                foreach (Piece p in pieces)
+                {
+                    if (p.Color == enums.Color.DARK)
+                    {
+                        for (int i = 0; i < 8; i++)
+                        {
+                            for (int j = 0; i < 8; i++)
+                            {
+                                Tuple<int, int> position = new Tuple<int, int>(i, j);
+                                Tuple<int, int>[] coordinates = new Tuple<int, int>[] { p.Position, position };
 
+                                if (board.TryMove((IMoveable)p, coordinates))
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
+            return true;
+        }
 
 
         public Piece GetPieceAtCoord(Tuple<int, int> tuple)
@@ -98,7 +160,6 @@ namespace ChessLib.controllers
             }
             return null;
         }
-
 
     }
 }

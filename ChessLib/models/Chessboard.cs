@@ -77,7 +77,7 @@ namespace ChessLib.models
         /// <returns>The coordinate's chess piece, null if the square is empty.</returns>
         public Piece GetPiece(Tuple<int, int> position)
         {
-            return board[position.Item1, position.Item2];
+            return board[position.Item2, position.Item1];
         }
 
         internal bool TryMove(IMoveable moveable, Tuple<int, int>[] tuple)
@@ -108,7 +108,7 @@ namespace ChessLib.models
                         }
                     }
                 }
-                
+                UpdatePosition(movedPiece, oldPosition);
             }
 
             return true;

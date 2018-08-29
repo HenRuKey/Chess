@@ -75,7 +75,14 @@ namespace ChessLib.controllers
                     case 2:
                         if (game.PerformMove(Commander.GetCoordinates(CommandSplit)))
                         {
-                            game.DetectCheck();
+                            if (game.DetectCheck())
+                            {
+                                if (game.IsCheckmate())
+                                {
+                                    Console.WriteLine("Checkmate!");
+                                };
+
+                            };
                             PrintBoard();
                         }
                         else

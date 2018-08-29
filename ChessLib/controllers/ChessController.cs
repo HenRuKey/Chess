@@ -32,8 +32,8 @@ namespace ChessLib.controllers
         /// </summary>
         public void PrintBoard()
         {
-            /*
-            for (int i = 7; i >= 0; i--)
+            
+            /*for (int i = 7; i >= 0; i--)
             {
                 Console.Write($"{1 + i}");
                 for (int j = 0; j <= 7; j++)
@@ -81,7 +81,13 @@ namespace ChessLib.controllers
                 case 2:
                     if (game.PerformMove(Commander.GetCoordinates(CommandSplit)))
                     {
-                        game.DetectCheck();
+                        if (game.DetectCheck())
+                        {
+                            if (game.IsCheckmate())
+                            {
+                                throw new NotImplementedException();
+                            }
+                        }
                         PrintBoard();
                     }
                     else

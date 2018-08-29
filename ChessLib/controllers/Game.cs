@@ -74,8 +74,6 @@ namespace ChessLib.controllers
             }
             return (moveable != null && moveSucceeded);
 
-
-
             //if (moveable != null && moveable.IsValidMove(board, tuple[1]))
             //{
 
@@ -83,7 +81,6 @@ namespace ChessLib.controllers
             //    return true;
             //}
             //return false;
-
         }
 
         internal void SpecialMove(Tuple<int, int>[] tuple)
@@ -112,22 +109,36 @@ namespace ChessLib.controllers
         }
         internal bool IsCheckmate()
         {
+            bool Checkmate = true;
             if (board.LightKing.InCheck)
             {
                 foreach (Piece p in pieces)
                 {
                     if (p.Color == enums.Color.LIGHT)
                     {
-                        for (int i = 0; i < 8; i++)
+                        for (int i = 0; i < 7; i++)
                         {
-                            for (int j = 0; i < 8; i++)
+                            for (int j = 0; j < 7; j++)
                             {
+                                Tuple<int, int> oldPosition = p.Position;
                                 Tuple<int, int> position = new Tuple<int, int>(i, j);
-                                Tuple<int, int>[] coordinates = new Tuple<int, int>[] { p.Position, position };
+                                Piece opponentPiece = board.GetPiece(new Tuple<int, int>(i, j));
+                                Tuple<int, int>[] coordinates = new Tuple<int, int>[] {p.Position, position };
 
                                 if (board.TryMove((IMoveable)p, coordinates))
                                 {
-                                    return false;
+
+                                    board.UpdatePosition(p, position);
+                                    Checkmate = DetectCheck();
+                                    board.UpdatePosition(p, oldPosition);
+                                    if (opponentPiece != null)
+                                    {
+                                        board.PlacePiece(opponentPiece);
+                                    }
+                                    if (!Checkmate)
+                                    {
+                                        return false;
+                                    }
                                 }
                             }
                         }
@@ -144,12 +155,24 @@ namespace ChessLib.controllers
                         {
                             for (int j = 0; i < 8; i++)
                             {
+                                Tuple<int, int> oldPosition = p.Position;
                                 Tuple<int, int> position = new Tuple<int, int>(i, j);
                                 Tuple<int, int>[] coordinates = new Tuple<int, int>[] { p.Position, position };
+                                Piece opponentPiece = board.GetPiece(new Tuple<int, int>(i, j));
 
                                 if (board.TryMove((IMoveable)p, coordinates))
                                 {
-                                    return false;
+                                    board.UpdatePosition(p, position);
+                                    Checkmate = DetectCheck();
+                                    board.UpdatePosition(p, oldPosition);
+                                    if (opponentPiece != null)
+                                    {
+                                        board.PlacePiece(opponentPiece);
+                                    }
+                                    if (!Checkmate)
+                                    {
+                                        return false;
+                                    }
                                 }
                             }
                         }
@@ -157,7 +180,7 @@ namespace ChessLib.controllers
                 }
             }
 
-            return true;
+            return Checkmate;
         }
 
 

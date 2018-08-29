@@ -65,12 +65,12 @@ namespace ChessLib.controllers
                 }
                 else
                 {
-                    OnMoveFailure(this, new MovementFailureEventArgs(MoveFailureReason.ILLEGAL_MOVE, piece, tuple[0]));
+                    OnMoveFailure(this, new MovementFailureArgs(MoveFailureReason.ILLEGAL_MOVE, piece, tuple[0]));
                 }
             }
             else
             {
-                OnMoveFailure(this, new MovementFailureEventArgs(MoveFailureReason.NO_PIECE_TO_MOVE, piece, tuple[0]));
+                OnMoveFailure(this, new MovementFailureArgs(MoveFailureReason.NO_PIECE_TO_MOVE, piece, tuple[0]));
             }
             return (moveable != null && moveSucceeded);
 
@@ -205,28 +205,11 @@ namespace ChessLib.controllers
         PIECE_BELONGS_TO_ENEMY
     }
 
-    public class MovementFailureEventArgs : EventArgs
+    public class MovementFailureArgs : EventArgs
     {
-        private MoveFailureReason reason;
-        public MoveFailureReason Reason
-        {
-            get { return reason; }
-            private set { reason = value; }
-        }
-
-        private Piece failedPiece;
-        public Piece FailedPiece
-        {
-            get { return failedPiece; }
-            private set { failedPiece = value; }
-        }
-
-        private Tuple<int,int> failedCoords;
-        public Tuple<int,int> FailedCoords
-        {
-            get { return failedCoords; }
-            private set { failedCoords = value; }
-        }
+        public MoveFailureReason Reason { get; private set; }
+        public Piece FailedPiece { get; private set; }
+        public Tuple<int,int> FailedCoords { get; private set; }
 
         public string Message
         {
@@ -237,7 +220,7 @@ namespace ChessLib.controllers
                     case MoveFailureReason.ILLEGAL_MOVE:
                         return "The move attempted was illegal.";
                     case MoveFailureReason.NO_PIECE_TO_MOVE:
-                        return $"There was no piece at coordinate {Commander.NumberToLetter(failedCoords.Item2)}{failedCoords.Item1 + 1}";
+                        return $"There was no piece at coordinate {Commander.NumberToLetter(FailedCoords.Item2)}{FailedCoords.Item1 + 1}";
                     case MoveFailureReason.PIECE_BELONGS_TO_ENEMY:
                         return "You are unable to move your opponent's piece.";
                     default:
@@ -246,7 +229,7 @@ namespace ChessLib.controllers
             }    
         }
 
-        public MovementFailureEventArgs(MoveFailureReason reason, Piece failedPiece, Tuple<int, int> failedCoords)
+        public MovementFailureArgs(MoveFailureReason reason, Piece failedPiece, Tuple<int, int> failedCoords)
         {
             Reason = reason;
             FailedCoords = failedCoords;

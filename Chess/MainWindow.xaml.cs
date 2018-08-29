@@ -64,7 +64,7 @@ namespace Chess
             controller.PlayFromFile();
         }
 
-        private void Game_OnMoveFailure(object sender, MovementFailureEventArgs e)
+        private void Game_OnMoveFailure(object sender, MovementFailureArgs e)
         {
             lblMessage.Text = e.Message;
         }
@@ -72,6 +72,17 @@ namespace Chess
         private void ChessBoard_OnPiecePlaced(object sender, PlacementArgs e)
         {
             tiles[e.PiecePlaced.Position].Piece = e.PiecePlaced;
+            // Add event listener for kings.
+            if (e.PiecePlaced is King)
+            {
+                King king = (King)e.PiecePlaced;
+                king.OnCheck += King_OnCheck;
+            }
+        }
+
+        private void King_OnCheck(object sender, CheckedArgs e)
+        {
+            lblMessage.Text = $"{e.Color} king is in check!";
         }
 
         private void ChessBoard_OnPieceMoved(object sender, MovementArgs e)

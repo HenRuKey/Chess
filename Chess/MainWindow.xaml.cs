@@ -66,7 +66,7 @@ namespace Chess
 
         private void Game_OnMoveFailure(object sender, MovementFailureEventArgs e)
         {
-            lblMessage.Content = e.Message;
+            lblMessage.Text = e.Message;
         }
 
         private void ChessBoard_OnPiecePlaced(object sender, PlacementArgs e)

@@ -16,10 +16,9 @@
             <TextBox Name="txtBoxCommand" Margin="50" FontFamily="New Century Gothic" 
                      FontWeight="Bold" FontSize="28" TextAlignment="Center"
                      Background="#730103" Foreground="#250001" KeyDown="txtBoxCommand_KeyDown"/>
-            <Label Name="lblMessage" Height="200" Background="#730103" Foreground="#250001" 
-                   Content="Message" HorizontalContentAlignment="Center" 
-                   VerticalContentAlignment="Center" 
-                   FontFamily="New Century Gothic" FontWeight="Bold" FontSize="28"/>
+            <TextBlock Name="lblMessage" Height="200" Background="#730103" Foreground="#250001"
+                   FontFamily="New Century Gothic" FontWeight="Bold" FontSize="28" TextWrapping="Wrap" 
+                       TextAlignment="Center" Padding="25"/>
             <Button Name="btnNewGame" Content="New Game" FontSize="28" 
                     Margin="30" Background="#730103" Foreground="#250001"
                     FontFamily="New Century Gothic" FontWeight="Bold" Click="btnNewGame_Click"/>

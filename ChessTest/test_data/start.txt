@@ -30,7 +30,3 @@ Pde7
 Pdf7
 Pdg7
 Pdh7
-g2 g3
-g3 g4
-f2 f3
-e7 e6

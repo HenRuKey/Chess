@@ -215,7 +215,7 @@ namespace ChessLib.controllers
         }
 
         private Piece failedPiece;
-        public Piece MyProperty
+        public Piece FailedPiece
         {
             get { return failedPiece; }
             private set { failedPiece = value; }
@@ -235,11 +235,11 @@ namespace ChessLib.controllers
                 switch (Reason)
                 {
                     case MoveFailureReason.ILLEGAL_MOVE:
-                        return "Move attempted was illegal.";
+                        return "The move attempted was illegal.";
                     case MoveFailureReason.NO_PIECE_TO_MOVE:
-                        return $"There was no piece at coordinate {Commander.NumberToLetter(failedCoords.Item2)}{failedCoords.Item1}";
+                        return $"There was no piece at coordinate {Commander.NumberToLetter(failedCoords.Item2)}{failedCoords.Item1 + 1}";
                     case MoveFailureReason.PIECE_BELONGS_TO_ENEMY:
-                        return "Unable to move opponent's piece.";
+                        return "You are unable to move your opponent's piece.";
                     default:
                         return "Move Failed.";
                 }
@@ -249,6 +249,8 @@ namespace ChessLib.controllers
         public MovementFailureEventArgs(MoveFailureReason reason, Piece failedPiece, Tuple<int, int> failedCoords)
         {
             Reason = reason;
+            FailedCoords = failedCoords;
+            FailedPiece = failedPiece;
         }
     }
 }

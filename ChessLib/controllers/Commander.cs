@@ -112,7 +112,7 @@ namespace ChessLib.controllers
         /// <returns>The cooresponding char letter of the passed integer.</returns>
         public static char NumberToLetter(int num)
         {
-            return (char)(65 + (num - 1));
+            return (char)(65 + (num));
         }
     }
 }

@@ -48,6 +48,7 @@ namespace Chess
             // Set-up events for when pieces are moved or placed.
             controller.game.ChessBoard.OnPieceMoved += ChessBoard_OnPieceMoved;
             controller.game.ChessBoard.OnPiecePlaced += ChessBoard_OnPiecePlaced;
+            controller.game.OnMoveFailure += Game_OnMoveFailure;
 
             for (int i = 7; i >= 0; i--)
             {
@@ -63,9 +64,25 @@ namespace Chess
             controller.PlayFromFile();
         }
 
+        private void Game_OnMoveFailure(object sender, MovementFailureArgs e)
+        {
+            lblMessage.Text = e.Message;
+        }
+
         private void ChessBoard_OnPiecePlaced(object sender, PlacementArgs e)
         {
             tiles[e.PiecePlaced.Position].Piece = e.PiecePlaced;
+            // Add event listener for kings.
+            if (e.PiecePlaced is King)
+            {
+                King king = (King)e.PiecePlaced;
+                king.OnCheck += King_OnCheck;
+            }
+        }
+
+        private void King_OnCheck(object sender, CheckedArgs e)
+        {
+            lblMessage.Text = $"{e.Color} king is in check!";
         }
 
         private void ChessBoard_OnPieceMoved(object sender, MovementArgs e)

@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using ChessLib.interfaces;
 using ChessLib.Exceptions;
-
+using static ChessLib.models.Delegates;
 
 namespace ChessLib.controllers
 {
     public class Game
     {
+
+        public event MovementFailureHandler OnMoveFailure;
 
         // TODO: Find alternate ways of implementing without exposing chessboard directly.
         private Chessboard board;
@@ -35,11 +37,11 @@ namespace ChessLib.controllers
             // Do we need to check if there's a piece currently occupying that position?
             pieces.Add(piece);
             board.PlacePiece(piece);
-            if(piece.GetType() == typeof(King))
+            if (piece.GetType() == typeof(King))
             {
-                if(piece.Color == enums.Color.LIGHT)
+                if (piece.Color == enums.Color.LIGHT)
                 {
-                    board.LightKing = (King) piece;
+                    board.LightKing = (King)piece;
 
                 }
                 else
@@ -52,28 +54,33 @@ namespace ChessLib.controllers
         internal bool PerformMove(Tuple<int, int>[] tuple)
         {
             Piece piece = GetPieceAtCoord(tuple[0]);
-            IMoveable moveable = (IMoveable) piece;
+            IMoveable moveable = (IMoveable)piece;
+            bool moveSucceeded = false;
             if (moveable != null)
             {
-                if(board.TryMove(moveable, tuple))
+                moveSucceeded = board.TryMove(moveable, tuple);
+                if (moveSucceeded)
                 {
                     board.UpdatePosition(piece, tuple[1]);
-                    return true;
                 }
-            }
-            pieces.Clear();
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; i < 8; i++)
+                else
                 {
-                    Piece p = board.GetPiece(new Tuple<int, int>(i, j));
-                    if (p != null)
-                    {
-                        pieces.Add(p);
-                    }
+                    OnMoveFailure(this, new MovementFailureArgs(MoveFailureReason.ILLEGAL_MOVE, piece, tuple[0]));
                 }
             }
-            return false;
+            else
+            {
+                OnMoveFailure(this, new MovementFailureArgs(MoveFailureReason.NO_PIECE_TO_MOVE, piece, tuple[0]));
+            }
+            return (moveable != null && moveSucceeded);
+
+            //if (moveable != null && moveable.IsValidMove(board, tuple[1]))
+            //{
+
+            //    board.UpdatePosition(piece, tuple[1]);
+            //    return true;
+            //}
+            //return false;
         }
 
         internal void SpecialMove(Tuple<int, int>[] tuple)
@@ -107,18 +114,18 @@ namespace ChessLib.controllers
             {
                 foreach (Piece p in pieces)
                 {
-                    if(p.Color == enums.Color.LIGHT)
+                    if (p.Color == enums.Color.LIGHT)
                     {
-                        for (int i = 0; i < 8; i++)
+                        for (int i = 0; i < 7; i++)
                         {
-                            for (int j = 0; j < 8; j++)
+                            for (int j = 0; j < 7; j++)
                             {
                                 Tuple<int, int> oldPosition = p.Position;
                                 Tuple<int, int> position = new Tuple<int, int>(i, j);
                                 Piece opponentPiece = board.GetPiece(new Tuple<int, int>(i, j));
                                 Tuple<int, int>[] coordinates = new Tuple<int, int>[] {p.Position, position };
 
-                                if(board.TryMove((IMoveable)p, coordinates))
+                                if (board.TryMove((IMoveable)p, coordinates))
                                 {
 
                                     board.UpdatePosition(p, position);
@@ -181,7 +188,7 @@ namespace ChessLib.controllers
         {
             foreach (Piece piece in pieces)
             {
-                if(piece.Position.Equals(tuple))
+                if (piece.Position.Equals(tuple))
                 {
                     return piece;
                 }
@@ -189,6 +196,45 @@ namespace ChessLib.controllers
             return null;
         }
 
+    }
+
+    public enum MoveFailureReason
+    {
+        NO_PIECE_TO_MOVE,
+        ILLEGAL_MOVE,
+        PIECE_BELONGS_TO_ENEMY
+    }
+
+    public class MovementFailureArgs : EventArgs
+    {
+        public MoveFailureReason Reason { get; private set; }
+        public Piece FailedPiece { get; private set; }
+        public Tuple<int,int> FailedCoords { get; private set; }
+
+        public string Message
+        {
+            get
+            {
+                switch (Reason)
+                {
+                    case MoveFailureReason.ILLEGAL_MOVE:
+                        return "The move attempted was illegal.";
+                    case MoveFailureReason.NO_PIECE_TO_MOVE:
+                        return $"There was no piece at coordinate {Commander.NumberToLetter(FailedCoords.Item2)}{FailedCoords.Item1 + 1}";
+                    case MoveFailureReason.PIECE_BELONGS_TO_ENEMY:
+                        return "You are unable to move your opponent's piece.";
+                    default:
+                        return "Move Failed.";
+                }
+            }    
+        }
+
+        public MovementFailureArgs(MoveFailureReason reason, Piece failedPiece, Tuple<int, int> failedCoords)
+        {
+            Reason = reason;
+            FailedCoords = failedCoords;
+            FailedPiece = failedPiece;
+        }
     }
 }
 

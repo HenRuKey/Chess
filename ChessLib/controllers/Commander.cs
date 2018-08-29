@@ -10,7 +10,7 @@ using ChessLib.interfaces;
 
 namespace ChessLib.controllers
 {
-   
+
     public static class Commander
     {
         private const int UNICODE_LETTER_OFFSET = 97;
@@ -47,7 +47,7 @@ namespace ChessLib.controllers
                     break;
             }
             piece.Position = new Tuple<int, int>(instruction[3] - '1', CharToInt(instruction[2]));
-            
+
             return piece;
         }
 
@@ -103,6 +103,16 @@ namespace ChessLib.controllers
         private static int CharToInt(char v)
         {
             return v - UNICODE_LETTER_OFFSET;
+        }
+
+        /// <summary>
+        /// Converts an integer to a cooresponding letter (A=1, B=2, etc.).
+        /// </summary>
+        /// <param name="num">An integer to convert to char.</param>
+        /// <returns>The cooresponding char letter of the passed integer.</returns>
+        public static char NumberToLetter(int num)
+        {
+            return (char)(65 + (num));
         }
     }
 }

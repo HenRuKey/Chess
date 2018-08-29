@@ -5,20 +5,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ChessLib.models.Delegates;
 
 namespace ChessLib.models
 {
     public class King : Piece, IMoveable, ICastleable
     {
-        public King(Color color) : base(color) {
+        public King(Color color) : base(color)
+        {
             InCheck = false;
         }
 
         // TODO: Implement ICastleable interface in King.cs
 
+        public event Checked OnCheck;
+
         public bool HasMoved => throw new NotImplementedException();
 
-        public bool InCheck { get; set; }
+        private bool inCheck;
+        public bool InCheck
+        {
+            get { return inCheck; }
+            set
+            {
+                inCheck = value;
+                if (inCheck)
+                {
+                    OnCheck(this, new CheckedArgs(this));
+                }
+            }
+        }
 
 
         public bool IsChecking(Chessboard board, King king)
@@ -46,6 +62,19 @@ namespace ChessLib.models
         {
             return "K";
         }
+    }
 
+    public class CheckedArgs : EventArgs
+    {
+        public King King { get; private set; }
+        public Color Color
+        {
+            get { return King.Color; }
+        }
+
+        public CheckedArgs(King kingInCheck)
+        {
+            King = kingInCheck;
+        }
     }
 }

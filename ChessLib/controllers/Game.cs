@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ChessLib.interfaces;
 using ChessLib.Exceptions;
 using static ChessLib.models.Delegates;
+using ChessLib.enums;
 
 namespace ChessLib.controllers
 {
@@ -14,6 +15,7 @@ namespace ChessLib.controllers
     {
 
         public event MovementFailureHandler OnMoveFailure;
+        public event CheckMateHandler OnCheckMate;
 
         // TODO: Find alternate ways of implementing without exposing chessboard directly.
         private Chessboard board;
@@ -22,23 +24,20 @@ namespace ChessLib.controllers
             get { return board; }
         }
 
-        private List<Piece> pieces;
-
         public Game()
         {
             board = new Chessboard();
-            pieces = new List<Piece>();
         }
 
 
         public void PlacePiece(Piece piece)
         {
-            // Do we need to track pieces on board?
             // Do we need to check if there's a piece currently occupying that position?
-            pieces.Add(piece);
             board.PlacePiece(piece);
             if (piece.GetType() == typeof(King))
             {
+                King king = (King)piece;
+                king.OnCheck += IsCheckmate;
                 if (piece.Color == enums.Color.LIGHT)
                 {
                     board.LightKing = (King)piece;
@@ -90,7 +89,7 @@ namespace ChessLib.controllers
 
         public bool DetectCheck()
         {
-            foreach (Piece p in pieces)
+            foreach (Piece p in board.Pieces)
             {
                 IMoveable piece = (IMoveable)p;
                 King king = p.Color == enums.Color.LIGHT ? board.DarkKing : board.LightKing;
@@ -104,15 +103,45 @@ namespace ChessLib.controllers
                     king.InCheck = false;
                 };
             }
-
             return false;
         }
+
+        private void IsCheckmate(object sender, CheckedArgs e)
+        {
+            King king = e.King;
+            foreach (Piece piece in board.Pieces)
+            {
+                if (piece.Color == e.Color)
+                {
+                    foreach (Tuple<int, int> move in board.GetAllPossibleMoves(piece))
+                    {
+                        Tuple<int, int> oldPosition = piece.Position;
+                        Piece occupyingPiece = board.GetPiece(move);
+
+                        board.UpdatePosition(piece, move);
+                        if (king.InCheck)
+                        {
+                            board.UpdatePosition(piece, oldPosition);
+                            if (occupyingPiece != null) { board.PlacePiece(occupyingPiece); };
+                            return;
+                        }
+                        else
+                        {
+                            board.UpdatePosition(piece, oldPosition);
+                            if (occupyingPiece != null) { board.PlacePiece(occupyingPiece); };
+                        }
+                    }
+                }
+            }
+            OnCheckMate(this, new CheckMateArgs(king));
+        }
+
         internal bool IsCheckmate()
         {
             bool Checkmate = true;
             if (board.LightKing.InCheck)
             {
-                foreach (Piece p in pieces)
+                foreach (Piece p in board.Pieces)
                 {
                     if (p.Color == enums.Color.LIGHT)
                     {
@@ -147,7 +176,7 @@ namespace ChessLib.controllers
             }
             if (board.DarkKing.InCheck)
             {
-                foreach (Piece p in pieces)
+                foreach (Piece p in board.Pieces)
                 {
                     if (p.Color == enums.Color.DARK)
                     {
@@ -186,7 +215,7 @@ namespace ChessLib.controllers
 
         public Piece GetPieceAtCoord(Tuple<int, int> tuple)
         {
-            foreach (Piece piece in pieces)
+            foreach (Piece piece in board.Pieces)
             {
                 if (piece.Position.Equals(tuple))
                 {
@@ -203,6 +232,20 @@ namespace ChessLib.controllers
         NO_PIECE_TO_MOVE,
         ILLEGAL_MOVE,
         PIECE_BELONGS_TO_ENEMY
+    }
+
+    public class CheckMateArgs : EventArgs
+    {
+        public King King { get; private set; }
+        Color WinningColor
+        {
+            get { return King.Color == Color.LIGHT ? Color.DARK : Color.LIGHT; }
+        }
+
+        public CheckMateArgs(King king)
+        {
+            King = king;
+        }
     }
 
     public class MovementFailureArgs : EventArgs

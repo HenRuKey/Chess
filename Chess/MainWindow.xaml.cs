@@ -49,6 +49,7 @@ namespace Chess
             controller.game.ChessBoard.OnPieceMoved += ChessBoard_OnPieceMoved;
             controller.game.ChessBoard.OnPiecePlaced += ChessBoard_OnPiecePlaced;
             controller.game.OnMoveFailure += Game_OnMoveFailure;
+            controller.game.OnCheckMate += Game_OnCheckMate;
 
             for (int i = 7; i >= 0; i--)
             {
@@ -62,6 +63,11 @@ namespace Chess
                 }
             }
             controller.PlayFromFile();
+        }
+
+        private void Game_OnCheckMate(object sender, CheckMateArgs e)
+        {
+            lblMessage.Text = "Check Mate";
         }
 
         private void Game_OnMoveFailure(object sender, MovementFailureArgs e)

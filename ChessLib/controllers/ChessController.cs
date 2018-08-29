@@ -85,7 +85,7 @@ namespace ChessLib.controllers
                         {
                             if (game.IsCheckmate())
                             {
-                                throw new NotImplementedException();
+                                
                             }
                         }
                         PrintBoard();

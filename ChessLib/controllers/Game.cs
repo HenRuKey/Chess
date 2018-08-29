@@ -61,18 +61,19 @@ namespace ChessLib.controllers
                     return true;
                 }
             }
+            pieces.Clear();
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; i < 8; i++)
+                {
+                    Piece p = board.GetPiece(new Tuple<int, int>(i, j));
+                    if (p != null)
+                    {
+                        pieces.Add(p);
+                    }
+                }
+            }
             return false;
-
-
-
-            //if (moveable != null && moveable.IsValidMove(board, tuple[1]))
-            //{
-
-            //    board.UpdatePosition(piece, tuple[1]);
-            //    return true;
-            //}
-            //return false;
-
         }
 
         internal void SpecialMove(Tuple<int, int>[] tuple)
@@ -108,9 +109,9 @@ namespace ChessLib.controllers
                 {
                     if(p.Color == enums.Color.LIGHT)
                     {
-                        for (int i = 0; i < 7; i++)
+                        for (int i = 0; i < 8; i++)
                         {
-                            for (int j = 0; j < 7; j++)
+                            for (int j = 0; j < 8; j++)
                             {
                                 Tuple<int, int> oldPosition = p.Position;
                                 Tuple<int, int> position = new Tuple<int, int>(i, j);

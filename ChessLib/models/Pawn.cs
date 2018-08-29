@@ -10,12 +10,8 @@ namespace ChessLib.models
 {
     public class Pawn : Piece, IMoveable
     {
-        public Pawn(Color color) : base(color)
-        {
-            this.FirstMove = true;
-        }
-
-        public bool FirstMove { get; set; }
+        public Pawn(Color color) : base(color) { }
+       
 
         // Implement IMoveable interface in Pawn.cs
         public bool IsChecking(Chessboard board, King king)
@@ -33,12 +29,11 @@ namespace ChessLib.models
             {
                 case Color.LIGHT:
                     limit = 1;
-                    if (this.FirstMove)
+                    if (this.Position.Item1 == 1)
                     {
                         limit = 2;
-                        this.FirstMove = false;
                     }
-                    if (XDiff == 0 && (YDiff > 0 && YDiff <= limit) && board.GetPiece(position) == null)
+                    if (XDiff == 0 && (Math.Abs(YDiff) > 0 && Math.Abs(YDiff) <= limit) && board.GetPiece(position) == null)
                     {
                         return true;
                     }
@@ -50,10 +45,9 @@ namespace ChessLib.models
                     break;
                 case Color.DARK:
                     limit = -1;
-                    if (this.FirstMove)
+                    if (this.Position.Item1 == 6)
                     {
                         limit = -2;
-                        this.FirstMove = false;
                     }
                     if (XDiff == 0 && (YDiff < 0 && YDiff >= limit) && board.GetPiece(position) == null)
                     {

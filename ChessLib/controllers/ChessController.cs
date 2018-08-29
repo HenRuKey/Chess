@@ -32,7 +32,7 @@ namespace ChessLib.controllers
         /// </summary>
         public void PrintBoard()
         {
-            
+            /*
             for (int i = 7; i >= 0; i--)
             {
                 Console.Write($"{1 + i}");
@@ -52,7 +52,7 @@ namespace ChessLib.controllers
             }
             Console.WriteLine("  A  B  C  D  E  F  G  H  ");
             Console.ReadKey();
-            
+            */
         }
 
         /// <summary>
@@ -63,38 +63,36 @@ namespace ChessLib.controllers
         {
             foreach (string command in Commands)
             {
-                string[] CommandSplit = command.Split(' ');
-                int numOfInstructions = CommandSplit.Length;
-                switch (numOfInstructions)
-                {
-                    case 1:
-                        Piece piece = Commander.CreatePiece(CommandSplit[0]);
-                        game.PlacePiece(piece);
-                        PrintBoard();
-                        break;
-                    case 2:
-                        if (game.PerformMove(Commander.GetCoordinates(CommandSplit)))
-                        {
-                            if (game.DetectCheck())
-                            {
-                                if (game.IsCheckmate())
-                                {
-                                    Console.WriteLine("Checkmate!");
-                                };
+                PerformCommand(command);
+            }
+        }
 
-                            };
-                            PrintBoard();
-                        }
-                        else
-                        {
-                            PrintBoard();
-                        };
-                        break;
-                    case 4:
-                        game.SpecialMove(Commander.GetSpecialCoordinates(CommandSplit));
-                        break;
-                    default: throw new InvalidCommandException(command);
-                }
+        public void PerformCommand(string command)
+        {
+            string[] CommandSplit = command.Split(' ');
+            int numOfInstructions = CommandSplit.Length;
+            switch (numOfInstructions)
+            {
+                case 1:
+                    Piece piece = Commander.CreatePiece(CommandSplit[0]);
+                    game.PlacePiece(piece);
+                    PrintBoard();
+                    break;
+                case 2:
+                    if (game.PerformMove(Commander.GetCoordinates(CommandSplit)))
+                    {
+                        game.DetectCheck();
+                        PrintBoard();
+                    }
+                    else
+                    {
+                        PrintBoard();
+                    };
+                    break;
+                case 4:
+                    game.SpecialMove(Commander.GetSpecialCoordinates(CommandSplit));
+                    break;
+                default: throw new InvalidCommandException(command);
             }
         }
 

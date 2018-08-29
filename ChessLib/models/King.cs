@@ -14,9 +14,7 @@ namespace ChessLib.models
             InCheck = false;
         }
 
-        // TODO: Implement IMoveable interface in King.cs
         // TODO: Implement ICastleable interface in King.cs
-
 
         public bool HasMoved => throw new NotImplementedException();
 

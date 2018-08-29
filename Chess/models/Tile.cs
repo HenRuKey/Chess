@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace Chess
@@ -39,7 +40,8 @@ namespace Chess
         public Piece Piece
         {
             get { return piece; }
-            set { piece = value; NotifyPropertyChanged(); }
+            set { piece = value;
+                NotifyPropertyChanged(); }
         }
 
         public Tile(Color color)
@@ -56,8 +58,11 @@ namespace Chess
             imageBinding.Mode = BindingMode.OneWay;
             imageBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             imageBinding.Converter = new PieceToImageConverter();
+            imageBinding.Source = this;
             image.SetBinding(Image.SourceProperty, imageBinding);
+            //image.Source = new BitmapImage(new Uri(PieceToImageConverter.FindImage("light_king")));
             grid.Children.Add(image);
         }
+        
     }
 }

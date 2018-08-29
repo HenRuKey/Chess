@@ -1,21 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using ChessLib.controllers;
 using ChessLib.models;
 
@@ -29,16 +15,16 @@ namespace Chess
         #region Color
         Color softWhite = new Color()
         {
-            R = 242,
-            B = 242,
-            G = 242,
+            R = 164,
+            B = 9,
+            G = 10,
             A = 255
         };
         Color darkSlate = new Color()
         {
-            R = 38,
-            B = 38,
-            G = 38,
+            R = 115,
+            B = 1,
+            G = 3,
             A = 255
         };
         #endregion
@@ -51,15 +37,19 @@ namespace Chess
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            controller = new ChessController("../../../ChessTest/test_data/valid_commands.txt");
+            PopulateBoard();
+        }
+
+        private void PopulateBoard()
+        {
+            controller = new ChessController("../../../ChessTest/test_data/start.txt");
             gridBoard.Columns = 8;
             gridBoard.Rows = 8;
-            gridBoard.DataContext = controller.game.ChessBoard;
-            // Set-up event for when a piece is moved.
+            // Set-up events for when pieces are moved or placed.
             controller.game.ChessBoard.OnPieceMoved += ChessBoard_OnPieceMoved;
             controller.game.ChessBoard.OnPiecePlaced += ChessBoard_OnPiecePlaced;
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 7; i >= 0; i--)
             {
                 for (int j = 0; j < 8; j++)
                 {
@@ -84,5 +74,26 @@ namespace Chess
             tiles[e.PieceMoved.Position].Piece = e.PieceMoved;
         }
 
+        private void txtBoxCommand_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key is System.Windows.Input.Key.Enter)
+            {
+                bool isValidMove;
+                string userInput = txtBoxCommand.Text;
+                if (FileReader.CommandIsValid(userInput))
+                {
+                    txtBoxCommand.Clear();
+                    controller.PerformCommand(userInput); // TODO find out if move succeeded.
+                }
+                else { isValidMove = false; }
+            }
+        }
+
+        private void btnNewGame_Click(object sender, RoutedEventArgs e)
+        {
+            tiles = new Dictionary<Tuple<int, int>, Tile>();
+            gridBoard.Children.Clear();
+            PopulateBoard();
+        }
     }
 }

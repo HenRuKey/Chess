@@ -57,11 +57,6 @@
     </ApplicationDefinition>
     <Compile Include="converters\PieceToImageConverter.cs" />
     <Compile Include="models\Tile.cs" />
-    <Compile Include="Resources\PieceImages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PieceImages.resx</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,10 +84,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Resources\PieceImages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>PieceImages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -119,43 +110,40 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\dark_bishop.png" />
+    <Resource Include="resources\pieces\dark_bishop.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\dark_king.png" />
+    <Resource Include="resources\pieces\dark_king.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\dark_knight.png" />
+    <Resource Include="resources\pieces\dark_knight.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\dark_pawn.png" />
+    <Resource Include="resources\pieces\dark_pawn.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\dark_queen.png" />
+    <Resource Include="resources\pieces\dark_queen.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\dark_rook.png" />
+    <Resource Include="resources\pieces\dark_rook.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\light_bishop.png" />
+    <Resource Include="resources\pieces\light_bishop.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\light_king.png" />
+    <Resource Include="resources\pieces\light_king.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\light_knight.png" />
+    <Resource Include="resources\pieces\light_knight.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\light_pawn.png" />
+    <Resource Include="resources\pieces\light_pawn.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\light_queen.png" />
+    <Resource Include="resources\pieces\light_queen.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pieces\light_rook.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\blank.bmp" />
+    <Resource Include="resources\pieces\light_rook.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

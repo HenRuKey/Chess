@@ -83,12 +83,8 @@ namespace ChessLib.controllers
                     {
                         if (game.DetectCheck())
                         {
-                            if (game.IsCheckmate())
-                            {
-                                
-                            }
+
                         }
-                        PrintBoard();
                     }
                     else
                     {

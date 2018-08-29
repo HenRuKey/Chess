@@ -44,6 +44,37 @@ namespace ChessLib.models
 
         public King LightKing { get; set; }
         public King DarkKing { get; set; }
+        public List<Piece> Pieces
+        {
+            get
+            {
+                List<Piece> pieces = new List<Piece>();
+                foreach (Piece piece in board)
+                {
+                    if (piece != null) { pieces.Add(piece); }
+                }
+                return pieces;
+            }
+        }
+
+
+        public Tuple<int, int>[] GetAllPossibleMoves(Piece piece)
+        {
+            List<Tuple<int, int>> possibleMoves = new List<Tuple<int, int>>();
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    Tuple<int, int> position = new Tuple<int, int>(i, j);
+                    Tuple<int, int>[] coordinates = new Tuple<int, int>[] { piece.Position, position };
+                    if (TryMove((IMoveable) piece, coordinates))
+                    {
+                        possibleMoves.Add(position);
+                    }
+                }
+            }
+            return possibleMoves.ToArray();
+        }
 
         /// <summary>
         /// Sets a piece's position to a specified coordinate.
@@ -88,23 +119,20 @@ namespace ChessLib.models
             if (moveable.IsValidMove(this, tuple[1]))
             {
                 UpdatePosition(movedPiece, tuple[1]);
-                for (int i = 0; i < 7; i++)
+                foreach (Piece piece in Pieces)
                 {
-                    for (int j = 0; j < 7; j++)
+                    Piece opponentPiece = piece;
+                    if (opponentPiece != null && opponentPiece.Color != movedPiece.Color)
                     {
-                        Piece opponentPiece = GetPiece(new Tuple<int, int>(i, j));
-                        if (opponentPiece != null && opponentPiece.Color != movedPiece.Color)
+                        IMoveable m = (IMoveable)opponentPiece;
+                        if (m.IsChecking(this, movedPiece.Color == enums.Color.LIGHT ? LightKing : DarkKing))
                         {
-                            IMoveable m = (IMoveable)opponentPiece;
-                            if (m.IsChecking(this, movedPiece.Color == enums.Color.LIGHT ? LightKing : DarkKing))
+                            UpdatePosition(movedPiece, oldPosition);
+                            if (OccupyingPiece != null)
                             {
-                                UpdatePosition(movedPiece, oldPosition);
-                                if (OccupyingPiece != null)
-                                {
-                                    PlacePiece(OccupyingPiece);
-                                }
-                                return false;
+                                PlacePiece(OccupyingPiece);
                             }
+                            return false;
                         }
                     }
                 }

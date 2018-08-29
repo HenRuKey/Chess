@@ -18,7 +18,7 @@ namespace ChessLib.models
 
         // TODO: Implement ICastleable interface in King.cs
 
-        public event Checked OnCheck;
+        public event CheckedHandler OnCheck;
 
         public bool HasMoved => throw new NotImplementedException();
 
@@ -28,8 +28,9 @@ namespace ChessLib.models
             get { return inCheck; }
             set
             {
+                bool currentStatus = inCheck;
                 inCheck = value;
-                if (inCheck)
+                if (!currentStatus && inCheck)
                 {
                     OnCheck(this, new CheckedArgs(this));
                 }
@@ -39,7 +40,8 @@ namespace ChessLib.models
 
         public bool IsChecking(Chessboard board, King king)
         {
-            return IsValidMove(board, king.Position);
+            return false;
+            // return IsValidMove(board, king.Position);
         }
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)

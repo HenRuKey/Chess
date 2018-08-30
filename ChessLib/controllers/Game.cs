@@ -242,6 +242,3 @@ namespace ChessLib.controllers
         }
     }
 }
-
-
-//Stream myStream = myAssembly.GetManifestResourceStream( "MyNamespace.SubFolder.MyImage.bmp" );

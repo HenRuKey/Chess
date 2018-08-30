@@ -58,6 +58,11 @@ namespace ChessLib.models
         }
 
 
+        /// <summary>
+        /// Finds all possible legal moves a given piece can make.
+        /// </summary>
+        /// <param name="piece">The piece to find moves for.</param>
+        /// <returns>An array of tuple coordinates the piece can legally move to.</returns>
         public Tuple<int, int>[] GetAllPossibleMoves(Piece piece)
         {
             List<Tuple<int, int>> possibleMoves = new List<Tuple<int, int>>();

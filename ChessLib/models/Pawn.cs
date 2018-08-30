@@ -49,7 +49,8 @@ namespace ChessLib.models
                         return true;
                     }
 
-                    if (this.Position.Item1 - position.Item1 == -1 && board.GetPiece(position) != null && board.GetPiece(position).Color != this.Color)
+                    if (this.Position.Item1 - position.Item1 == -1 && board.GetPiece(position) != null 
+                        && board.GetPiece(position).Color != this.Color && (XDiff == 1 || XDiff == -1))
                     {
                         return true;
                     }
@@ -65,7 +66,8 @@ namespace ChessLib.models
                         return true;
                     }
 
-                    if (this.Position.Item1 - position.Item1 == 1 && board.GetPiece(position) != null && board.GetPiece(position).Color != this.Color)
+                    if (this.Position.Item1 - position.Item1 == 1 && board.GetPiece(position) != null 
+                        && board.GetPiece(position).Color != this.Color && (XDiff == 1 || XDiff == -1))
                     {
                         return true;
                     }

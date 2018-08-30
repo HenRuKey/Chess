@@ -115,7 +115,7 @@ namespace Chess
                 {
                     txtBoxCommand.Clear();
                     lblMessage.Text = "";
-                    controller.PerformCommand(userInput); // TODO find out if move succeeded.
+                    controller.PerformCommand(userInput);
                 }
             }
         }

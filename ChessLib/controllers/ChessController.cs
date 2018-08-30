@@ -94,11 +94,5 @@ namespace ChessLib.controllers
                 default: throw new InvalidCommandException(command);
             }
         }
-
-        //TODO Add manual gameplay methods
-
-
-
-
     }
 }

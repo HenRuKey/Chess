@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="converters\BoolToMessageConverter.cs" />
     <Compile Include="converters\PieceToImageConverter.cs" />
     <Compile Include="models\Tile.cs" />
     <Page Include="MainWindow.xaml">

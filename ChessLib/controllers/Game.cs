@@ -8,11 +8,23 @@ using ChessLib.interfaces;
 using ChessLib.Exceptions;
 using static ChessLib.models.Delegates;
 using ChessLib.enums;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ChessLib.controllers
 {
-    public class Game
+    public class Game : INotifyPropertyChanged
     {
+        #region INotifyPropertyChanged Implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
 
         public event MovementFailureHandler OnMoveFailure;
         public event CheckMateHandler OnCheckMate;
@@ -24,9 +36,17 @@ namespace ChessLib.controllers
             get { return board; }
         }
 
+        private bool whiteToMove;
+        public bool WhiteToMove
+        {
+            get { return whiteToMove; }
+            private set { whiteToMove = value; NotifyPropertyChanged(); }
+        }
+
         public Game()
         {
             board = new Chessboard();
+            WhiteToMove = true;
         }
 
 
@@ -53,6 +73,12 @@ namespace ChessLib.controllers
         internal bool PerformMove(Tuple<int, int>[] tuple)
         {
             Piece piece = GetPieceAtCoord(tuple[0]);
+            if ((piece.Color == Color.LIGHT && !WhiteToMove) ||
+                (piece.Color == Color.DARK && WhiteToMove))
+            {
+                OnMoveFailure(this, new MovementFailureArgs(MoveFailureReason.PIECE_BELONGS_TO_ENEMY, piece, tuple[0]));
+                return false;
+            }
             IMoveable moveable = (IMoveable)piece;
             bool moveSucceeded = false;
             if (moveable != null)
@@ -70,16 +96,17 @@ namespace ChessLib.controllers
             else
             {
                 OnMoveFailure(this, new MovementFailureArgs(MoveFailureReason.NO_PIECE_TO_MOVE, piece, tuple[0]));
+                return false;
             }
-            return (moveable != null && moveSucceeded);
-
-            //if (moveable != null && moveable.IsValidMove(board, tuple[1]))
-            //{
-
-            //    board.UpdatePosition(piece, tuple[1]);
-            //    return true;
-            //}
-            //return false;
+            if (moveable != null && moveSucceeded)
+            {
+                WhiteToMove = !WhiteToMove;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         internal void SpecialMove(Tuple<int, int>[] tuple)
@@ -136,83 +163,6 @@ namespace ChessLib.controllers
             OnCheckMate(this, new CheckMateArgs(king));
         }
 
-        internal bool IsCheckmate()
-        {
-            bool Checkmate = true;
-            if (board.LightKing.InCheck)
-            {
-                foreach (Piece p in board.Pieces)
-                {
-                    if (p.Color == enums.Color.LIGHT)
-                    {
-                        for (int i = 0; i < 7; i++)
-                        {
-                            for (int j = 0; j < 7; j++)
-                            {
-                                Tuple<int, int> oldPosition = p.Position;
-                                Tuple<int, int> position = new Tuple<int, int>(i, j);
-                                Piece opponentPiece = board.GetPiece(new Tuple<int, int>(i, j));
-                                Tuple<int, int>[] coordinates = new Tuple<int, int>[] {p.Position, position };
-
-                                if (board.TryMove((IMoveable)p, coordinates))
-                                {
-
-                                    board.UpdatePosition(p, position);
-                                    Checkmate = DetectCheck();
-                                    board.UpdatePosition(p, oldPosition);
-                                    if (opponentPiece != null)
-                                    {
-                                        board.PlacePiece(opponentPiece);
-                                    }
-                                    if (!Checkmate)
-                                    {
-                                        return false;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (board.DarkKing.InCheck)
-            {
-                foreach (Piece p in board.Pieces)
-                {
-                    if (p.Color == enums.Color.DARK)
-                    {
-                        for (int i = 0; i < 8; i++)
-                        {
-                            for (int j = 0; i < 8; i++)
-                            {
-                                Tuple<int, int> oldPosition = p.Position;
-                                Tuple<int, int> position = new Tuple<int, int>(i, j);
-                                Tuple<int, int>[] coordinates = new Tuple<int, int>[] { p.Position, position };
-                                Piece opponentPiece = board.GetPiece(new Tuple<int, int>(i, j));
-
-                                if (board.TryMove((IMoveable)p, coordinates))
-                                {
-                                    board.UpdatePosition(p, position);
-                                    Checkmate = DetectCheck();
-                                    board.UpdatePosition(p, oldPosition);
-                                    if (opponentPiece != null)
-                                    {
-                                        board.PlacePiece(opponentPiece);
-                                    }
-                                    if (!Checkmate)
-                                    {
-                                        return false;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return Checkmate;
-        }
-
-
         public Piece GetPieceAtCoord(Tuple<int, int> tuple)
         {
             foreach (Piece piece in board.Pieces)
@@ -224,7 +174,6 @@ namespace ChessLib.controllers
             }
             return null;
         }
-
     }
 
     public enum MoveFailureReason

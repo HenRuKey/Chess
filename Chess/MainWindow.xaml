@@ -10,8 +10,8 @@
         <UniformGrid Name="gridBoard" Width="600" HorizontalAlignment="Left" Margin="70"/>
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Width="300" Margin="35">
             <Label Name="lblTurn" Height="200" Background="#730103" Foreground="#250001" 
-                   Content="White's Turn" HorizontalContentAlignment="Center" 
-                   VerticalContentAlignment="Center" 
+                   HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center"
                    FontFamily="New Century Gothic" FontWeight="Bold" FontSize="28"/>
             <TextBox Name="txtBoxCommand" Margin="50" FontFamily="New Century Gothic" 
                      FontWeight="Bold" FontSize="28" TextAlignment="Center"

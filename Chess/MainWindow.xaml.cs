@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
+using Chess.converters;
 using ChessLib.controllers;
 using ChessLib.models;
 
@@ -50,7 +53,12 @@ namespace Chess
             controller.game.ChessBoard.OnPiecePlaced += ChessBoard_OnPiecePlaced;
             controller.game.OnMoveFailure += Game_OnMoveFailure;
             controller.game.OnCheckMate += Game_OnCheckMate;
-
+            // Bind player's move to label.
+            lblTurn.DataContext = controller.game;
+            Binding binding = new Binding("WhiteToMove");
+            binding.Converter = new BoolToMessageConverter();
+            lblTurn.SetBinding(Label.ContentProperty, binding);
+            // Populate grid with tiles
             for (int i = 7; i >= 0; i--)
             {
                 for (int j = 0; j < 8; j++)
@@ -68,6 +76,7 @@ namespace Chess
         private void Game_OnCheckMate(object sender, CheckMateArgs e)
         {
             lblMessage.Text = "Check Mate";
+            txtBoxCommand.IsEnabled = false;
         }
 
         private void Game_OnMoveFailure(object sender, MovementFailureArgs e)
@@ -101,14 +110,13 @@ namespace Chess
         {
             if (e.Key is System.Windows.Input.Key.Enter)
             {
-                bool isValidMove;
                 string userInput = txtBoxCommand.Text;
                 if (FileReader.CommandIsValid(userInput))
                 {
                     txtBoxCommand.Clear();
+                    lblMessage.Text = "";
                     controller.PerformCommand(userInput); // TODO find out if move succeeded.
                 }
-                else { isValidMove = false; }
             }
         }
 
@@ -117,6 +125,7 @@ namespace Chess
             tiles = new Dictionary<Tuple<int, int>, Tile>();
             gridBoard.Children.Clear();
             PopulateBoard();
+            txtBoxCommand.IsEnabled = true;
         }
     }
 }

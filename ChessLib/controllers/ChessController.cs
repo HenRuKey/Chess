@@ -81,10 +81,7 @@ namespace ChessLib.controllers
                 case 2:
                     if (game.PerformMove(Commander.GetCoordinates(CommandSplit)))
                     {
-                        if (game.DetectCheck())
-                        {
-
-                        }
+                        game.DetectCheck();
                     }
                     else
                     {

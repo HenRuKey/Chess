@@ -5,18 +5,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ChessLib.models.Delegates;
 
 namespace ChessLib.models
 {
     public class Pawn : Piece, IMoveable
     {
         public Pawn(Color color) : base(color) { }
-       
+
+        public event PawnPromotionHandler OnPromotion;
 
         // Implement IMoveable interface in Pawn.cs
         public bool IsChecking(Chessboard board, King king)
         {
             return IsValidMove(board, king.Position);
+        }
+
+        public void ValidatePromotion()
+        {
+            if ((this.Color == Color.LIGHT && this.Position.Item1 == 7) || 
+                (this.Color == Color.DARK && this.Position.Item1 == 0))
+            {
+                OnPromotion(this, new PawnPromotionArgs(this));
+            }
         }
 
         public bool IsValidMove(Chessboard board, Tuple<int, int> position)
@@ -68,6 +79,16 @@ namespace ChessLib.models
         public override string ToString()
         {
             return "P";
+        }
+    }
+
+    public class PawnPromotionArgs : EventArgs
+    {
+        public Pawn Pawn { get; private set; }
+
+        public PawnPromotionArgs(Pawn pawn)
+        {
+            Pawn = pawn;
         }
     }
 }

@@ -14,5 +14,6 @@ namespace ChessLib.models
         public delegate void MovementFailureHandler(object sender, MovementFailureArgs e);
         public delegate void CheckedHandler(object sender, CheckedArgs e);
         public delegate void CheckMateHandler(object sender, CheckMateArgs e);
+        public delegate void PawnPromotionHandler(object sender, PawnPromotionArgs e);
     }
 }

@@ -54,7 +54,7 @@ namespace ChessLib.controllers
         {
             // Do we need to check if there's a piece currently occupying that position?
             board.PlacePiece(piece);
-            if (piece.GetType() == typeof(King))
+            if (piece is King)
             {
                 King king = (King)piece;
                 king.OnCheck += IsCheckmate;
@@ -67,7 +67,19 @@ namespace ChessLib.controllers
                 {
                     board.DarkKing = (King)piece;
                 }
-            };
+            }
+            else if (piece is Pawn)
+            {
+                Pawn pawn = (Pawn)piece;
+                pawn.OnPromotion += Pawn_OnPromotion;
+            }
+        }
+
+        private void Pawn_OnPromotion(object sender, PawnPromotionArgs e)
+        {
+            Queen queen = new Queen(e.Pawn.Color);
+            queen.Position = e.Pawn.Position;
+            board.PlacePiece(queen);
         }
 
         internal bool PerformMove(Tuple<int, int>[] tuple)
@@ -87,6 +99,7 @@ namespace ChessLib.controllers
                 if (moveSucceeded)
                 {
                     board.UpdatePosition(piece, tuple[1]);
+                    if (piece is Pawn) { ((Pawn)piece).ValidatePromotion(); }
                 }
                 else
                 {

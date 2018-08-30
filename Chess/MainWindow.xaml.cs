@@ -75,7 +75,7 @@ namespace Chess
 
         private void Game_OnCheckMate(object sender, CheckMateArgs e)
         {
-            lblMessage.Text = "Check Mate";
+            lblMessage.Text = $"Check Mate: {e.WinningColor} wins!";
             txtBoxCommand.IsEnabled = false;
         }
 
@@ -97,7 +97,7 @@ namespace Chess
 
         private void King_OnCheck(object sender, CheckedArgs e)
         {
-            lblMessage.Text = $"{e.Color} king is in check!";
+            lblMessage.Text = (e.Color == ChessLib.enums.Color.LIGHT ? "White" : "Black") + " king is in check!";
         }
 
         private void ChessBoard_OnPieceMoved(object sender, MovementArgs e)

@@ -85,8 +85,8 @@ namespace ChessLib.controllers
         internal bool PerformMove(Tuple<int, int>[] tuple)
         {
             Piece piece = GetPieceAtCoord(tuple[0]);
-            if ((piece.Color == Color.LIGHT && !WhiteToMove) ||
-                (piece.Color == Color.DARK && WhiteToMove))
+            if ((piece?.Color == Color.LIGHT && !WhiteToMove) ||
+                (piece?.Color == Color.DARK && WhiteToMove))
             {
                 OnMoveFailure(this, new MovementFailureArgs(MoveFailureReason.PIECE_BELONGS_TO_ENEMY, piece, tuple[0]));
                 return false;
@@ -199,9 +199,9 @@ namespace ChessLib.controllers
     public class CheckMateArgs : EventArgs
     {
         public King King { get; private set; }
-        Color WinningColor
+        public string WinningColor
         {
-            get { return King.Color == Color.LIGHT ? Color.DARK : Color.LIGHT; }
+            get { return King.Color == Color.LIGHT ? "Black" : "White"; }
         }
 
         public CheckMateArgs(King king)

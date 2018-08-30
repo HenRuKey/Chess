@@ -137,6 +137,10 @@ namespace ChessLib.models
                     }
                 }
                 UpdatePosition(movedPiece, oldPosition);
+                if (OccupyingPiece != null)
+                {
+                    PlacePiece(OccupyingPiece);
+                }
                 return true;
             }
 

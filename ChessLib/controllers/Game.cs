@@ -159,6 +159,7 @@ namespace ChessLib.controllers
                         Piece occupyingPiece = board.GetPiece(move);
 
                         board.UpdatePosition(piece, move);
+                        DetectCheck();
                         if (king.InCheck)
                         {
                             board.UpdatePosition(piece, oldPosition);

@@ -61,9 +61,9 @@ namespace ChessLib.models
         public Tuple<int, int>[] GetAllPossibleMoves(Piece piece)
         {
             List<Tuple<int, int>> possibleMoves = new List<Tuple<int, int>>();
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i <= 7; i++)
             {
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j <= 7; j++)
                 {
                     Tuple<int, int> position = new Tuple<int, int>(i, j);
                     Tuple<int, int>[] coordinates = new Tuple<int, int>[] { piece.Position, position };

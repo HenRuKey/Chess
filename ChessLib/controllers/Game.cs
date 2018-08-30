@@ -163,12 +163,12 @@ namespace ChessLib.controllers
                         {
                             board.UpdatePosition(piece, oldPosition);
                             if (occupyingPiece != null) { board.PlacePiece(occupyingPiece); };
-                            return;
                         }
                         else
                         {
                             board.UpdatePosition(piece, oldPosition);
                             if (occupyingPiece != null) { board.PlacePiece(occupyingPiece); };
+                            return;
                         }
                     }
                 }
